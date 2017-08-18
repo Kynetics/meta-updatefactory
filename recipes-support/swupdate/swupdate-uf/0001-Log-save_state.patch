@@ -1,0 +1,24 @@
+From 8f118aca06c4c2f1dbabdcf51c388171d881f3f0 Mon Sep 17 00:00:00 2001
+From: Diego Rondini <diego.rondini@kynetics.com>
+Date: Wed, 21 Jun 2017 08:40:43 +0000
+Subject: [PATCH] Log save_state
+
+---
+ suricatta/state.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/suricatta/state.c b/suricatta/state.c
+index f7f7ae7..364f30b 100644
+--- a/suricatta/state.c
++++ b/suricatta/state.c
+@@ -84,6 +84,7 @@ server_op_res_t save_state(char *key, update_state_t value)
+ 	CHECK_STATE_VAR(key);
+ 
+ 	ret = bootloader_env_set(key, value_str);
++	INFO("Saved value '%s' to key '%s' with return value '%d'.\n", value_str, key, ret);
+ 
+ 	return ret == 0 ? SERVER_OK : SERVER_EERR;
+ }
+-- 
+1.9.1
+

@@ -1,0 +1,110 @@
+From dd76beb53af69b49b99b4f42c89fc18591f50938 Mon Sep 17 00:00:00 2001
+From: Diego Rondini <diego.rondini@kynetics.com>
+Date: Wed, 31 May 2017 10:28:47 +0200
+Subject: [PATCH 2/4] Implement prototype file download for hawkbit.
+
+---
+ suricatta/server_hawkbit.c | 44 ++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 40 insertions(+), 4 deletions(-)
+
+diff --git a/suricatta/server_hawkbit.c b/suricatta/server_hawkbit.c
+index bf4f5ce..d70e671 100644
+--- a/suricatta/server_hawkbit.c
++++ b/suricatta/server_hawkbit.c
+@@ -31,6 +31,9 @@
+ #include <network_ipc.h>
+ #include <sys/time.h>
+ #include <swupdate_status.h>
++#include <sys/types.h>
++#include <sys/stat.h>
++#include <fcntl.h>
+ #include "suricatta/suricatta.h"
+ #include "suricatta/channel.h"
+ #include "channel_hawkbit.h"
+@@ -123,7 +126,8 @@ server_op_res_t server_process_update_artifact(int action_id,
+ 						const char *update_action,
+ 						const char *part,
+ 						const char *version,
+-						const char *name);
++						const char *name,
++						int *artifact_count);
+ void suricatta_print_help(void);
+ server_op_res_t server_set_polling_interval(json_object *json_root);
+ server_op_res_t server_set_config_data(json_object *json_root);
+@@ -907,7 +911,8 @@ server_op_res_t server_process_update_artifact(int action_id,
+ 						const char *update_action,
+ 						const char *part,
+ 						const char *version,
+-						const char *name)
++						const char *name,
++						int *artifact_count)
+ {
+ 	channel_t *channel = server_hawkbit.channel;
+ 	assert(channel != NULL);
+@@ -1041,8 +1046,35 @@ server_op_res_t server_process_update_artifact(int action_id,
+ 
+ 		server_get_current_time(&server_time);
+ 
++		int update_artifact_file_fd = FD_USE_IPC;
++		(*artifact_count)++;
++		if ((*artifact_count) >= 1000) {
++			ERROR("Too many artifacts, cannot save them all.\n");
++		} else {
++			// Create file path
++			const char *update_artifacts_storage_path = "/tmp";
++			int update_artifacts_storage_fd = open(update_artifacts_storage_path, O_PATH | O_DIRECTORY);
++			if (update_artifacts_storage_fd < 0) {
++				ERROR("Open of artifacts storage directory failed.\n");
++			} else {
++				const char *artifact_filename = json_object_get_string(json_data_artifact_filename);
++				size_t artifact_saved_filename_size = 3 + 1 + strlen(artifact_filename) + 1;
++				char *update_artifact_file = (char *)malloc(artifact_saved_filename_size * sizeof(char));
++				snprintf(update_artifact_file, artifact_saved_filename_size, "%03d_%s", *artifact_count, artifact_filename);
++				// Create artifact file
++				update_artifact_file_fd = openat(update_artifacts_storage_fd, update_artifact_file, O_CREAT | O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
++				if (update_artifact_file_fd < 0) {
++					ERROR("Open of artifact file %s failed.\n", update_artifact_file);
++					free(update_artifact_file);
++					goto cleanup_loop;
++				}
++				free(update_artifact_file);
++			}
++		}
++
++
+ 		channel_op_res_t cresult =
+-		    channel->get_file(channel, (void *)&channel_data, FD_USE_IPC);
++		    channel->get_file(channel, (void *)&channel_data, update_artifact_file_fd);
+ 		if ((result = map_channel_retcode(cresult)) != SERVER_OK) {
+ 			/* this is called to collect errors */
+ 			ipc_wait_for_complete(server_update_status_callback);
+@@ -1108,6 +1140,8 @@ cleanup:
+ server_op_res_t server_install_update(void)
+ {
+ 	int action_id;
++	int *artifact_count = malloc(sizeof(*artifact_count));
++	(*artifact_count) = 0;
+ 	channel_data_t channel_data = channel_data_defaults;
+ 	server_op_res_t result =
+ 	    server_get_deployment_info(server_hawkbit.channel, &channel_data, &action_id);
+@@ -1241,7 +1275,8 @@ server_op_res_t server_install_update(void)
+ 				json_object_get_string(json_deployment_update_action),
+ 				json_object_get_string(json_data_chunk_part),
+ 				json_object_get_string(json_data_chunk_version),
+-				json_object_get_string(json_data_chunk_name));
++				json_object_get_string(json_data_chunk_name),
++				artifact_count);
+ 
+ 		if (result != SERVER_OK) {
+ 
+@@ -1295,6 +1330,7 @@ server_op_res_t server_install_update(void)
+ 	}
+ 
+ cleanup:
++	free(artifact_count);
+ 	for (int i = 0; i < HAWKBIT_MAX_REPORTED_ERRORS; i++) {
+ 		if (server_hawkbit.errors[i]) {
+ 			free(server_hawkbit.errors[i]);
+-- 
+2.9.4
+

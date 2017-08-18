@@ -1,0 +1,4 @@
+#!/bin/sh
+
+source /etc/swupdate/swupdate.env
+swupdate-client /recovery/updates/*.swu && fw_setenv --script ${SWUPDATE_UBOOT_DIR}/installed.uenv && rm -rf /recovery/updates/*.swu && reboot

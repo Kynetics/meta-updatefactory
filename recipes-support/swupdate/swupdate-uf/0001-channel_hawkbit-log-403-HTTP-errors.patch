@@ -1,0 +1,37 @@
+From b309631438f6cc62977583944dd2422b6cd1641d Mon Sep 17 00:00:00 2001
+From: Diego Rondini <diego.rondini@kynetics.com>
+Date: Fri, 21 Jul 2017 13:56:20 +0200
+Subject: [PATCH] channel_hawkbit: log 403 HTTP errors
+
+Signed-off-by: Diego Rondini <diego.rondini@kynetics.com>
+---
+ suricatta/channel_hawkbit.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
+
+diff --git a/suricatta/channel_hawkbit.c b/suricatta/channel_hawkbit.c
+index 514bccc..9d1a2c1 100644
+--- a/suricatta/channel_hawkbit.c
++++ b/suricatta/channel_hawkbit.c
+@@ -888,11 +888,14 @@ channel_op_res_t channel_get(channel_t *this, void *data)
+ 	    CHANNEL_OK) {
+ 		ERROR("Channel operation returned HTTP error code %ld.\n",
+ 		      http_response_code);
+-		if (http_response_code == 500) {
+-			DEBUG("The error's message is: '%s'\n", chunk.memory);
+-		}
+-		if (http_response_code == 404) {
+-			DEBUG("The error's message is: '%s'\n", chunk.memory);
++		switch (http_response_code) {
++			case 403:
++			case 404:
++			case 500:
++				DEBUG("The error's message is: '%s'\n", chunk.memory);
++				break;
++			default:
++				break;
+ 		}
+ 		goto cleanup_chunk;
+ 	}
+-- 
+2.9.4
+
