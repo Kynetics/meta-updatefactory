@@ -5,4 +5,4 @@
 
 include sdimage-bootpart.wks
 
-part /recovery --source filescopy --size 1000 --ondisk mmcblk0 --fstype=ext4 --label recovery --align 4
+part --source filescopy --size 1000 --fstype=ext4 --label recovery --align 4
