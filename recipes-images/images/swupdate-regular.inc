@@ -4,9 +4,12 @@ IMAGE_FSTYPES = "wic.gz wic.bmap"
 
 RECOVERY_IMAGE_FILES = " \
     ${IMAGE_BOOT_FILES} \
+    boot-update.scr-${MACHINE};boot.scr \
     swupdate-image-${MACHINE}.cpio.gz.u-boot;swupdate.img \
     updates/*;updates/ \
 "
+
+RECOVERY_IMAGE_FILES_remove = "6x_bootscript-nitrogen6x;6x_bootscript"
 
 WICVARS += "RECOVERY_IMAGE_FILES"
 
