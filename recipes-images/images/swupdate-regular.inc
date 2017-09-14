@@ -5,6 +5,7 @@ IMAGE_FSTYPES = "wic.gz wic.bmap"
 RECOVERY_IMAGE_FILES = " \
     ${IMAGE_BOOT_FILES} \
     boot-update.scr-${MACHINE};boot.scr \
+    ${@bb.utils.contains('IMAGE_BOOT_FILES', "6x_bootscript-${MACHINE};6x_bootscript", "6x_bootscript-update.scr-${MACHINE};6x_bootscript", '', d)} \
     swupdate-image-${MACHINE}.cpio.gz.u-boot;swupdate.img \
     updates/*;updates/ \
 "
