@@ -13,7 +13,9 @@ RECOVERY_IMAGE_FILES_remove = "6x_bootscript-${MACHINE};6x_bootscript"
 
 WICVARS += "RECOVERY_IMAGE_FILES"
 
-do_image_wic[depends] += "swupdate-image:do_image_complete"
+# TODO: we need to have a virtual provider for u-boot-script-update, so that it
+# is not boundary specific
+do_image_wic[depends] += "swupdate-image:do_image_complete u-boot-script-update-boundary:do_deploy"
 
 recovery_prepare() {
     # Create recovery mount point
