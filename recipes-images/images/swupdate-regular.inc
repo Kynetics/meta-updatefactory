@@ -9,7 +9,7 @@ RECOVERY_IMAGE_FILES = " \
     updates/*;updates/ \
 "
 
-RECOVERY_IMAGE_FILES_remove = "6x_bootscript-nitrogen6x;6x_bootscript"
+RECOVERY_IMAGE_FILES_remove = "6x_bootscript-${MACHINE};6x_bootscript"
 
 WICVARS += "RECOVERY_IMAGE_FILES"
 
