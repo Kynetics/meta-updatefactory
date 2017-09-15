@@ -1,6 +1,7 @@
 #!/bin/sh
 
 source /etc/swupdate/swupdate.env
+source ${SWUPDATE_CONF_DIR}/update.env
 UBOOT_BOOTCMD="`fw_printenv -n bootcmd`"
 case "${UBOOT_BOOTCMD}" in
 	"run distro_bootcmd")
@@ -19,4 +20,7 @@ case "${UBOOT_BOOTCMD}" in
 		exit 1
 		;;
 esac
-fw_setenv --script ${SWUPDATE_UBOOT_DIR}/downloaded.uenv && reboot
+
+if ( ${UPDATE_FORCED} ); then
+	reboot_for_update.sh &
+fi
