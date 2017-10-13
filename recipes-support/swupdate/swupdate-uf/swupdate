@@ -63,9 +63,7 @@ do_start() {
 		if [ "$MODE" == "cloud" ]; then
 			exec $DAEMON -f "${CONFIGFILE}" -u "-s /recovery/updates/ -i device-${ETH0_MAC_ADDRESS}" &
 		else
-			exec $DAEMON -f "${CONFIGFILE}" &
-			sleep 2
-			exec $CLIENT
+			exec $CLIENT 2>&1 | tee /recovery/updates/last_install.log &
 		fi
 		exit 0
 		;;
