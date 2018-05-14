@@ -1,6 +1,6 @@
-WKS_FILE = "sdimage-bootpart-recovery.wks"
+WKS_FILE ?= "sdimage-bootpart-recovery.wks"
 
-IMAGE_FSTYPES = "wic.gz wic.bmap"
+IMAGE_FSTYPES ?= "wic.gz wic.bmap"
 
 RECOVERY_IMAGE_FILES = " \
     ${IMAGE_BOOT_FILES} \
