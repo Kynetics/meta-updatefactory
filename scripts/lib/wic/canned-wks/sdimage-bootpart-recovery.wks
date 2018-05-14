@@ -4,5 +4,4 @@
 # the third partition.
 
 include sdimage-bootpart.wks
-
-part --source filescopy --size 1000 --fstype=ext4 --label recovery --align 4
+include recovery.wks
