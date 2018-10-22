@@ -2,21 +2,26 @@ WKS_FILE ?= "sdimage-bootpart-recovery.wks"
 
 IMAGE_FSTYPES ?= "wic.gz wic.bmap"
 
+IMAGE_BOOT_FILES_BASE = "${IMAGE_BOOT_FILES}"
+
+IMAGE_BOOT_FILES += "\
+    boot-regular.scr-${MACHINE};boot.scr \
+"
+
 RECOVERY_IMAGE_FILES = " \
-    ${IMAGE_BOOT_FILES} \
+    ${IMAGE_BOOT_FILES_BASE} \
     boot-update.scr-${MACHINE};boot.scr \
     ${@bb.utils.contains('IMAGE_BOOT_FILES', "6x_bootscript-${MACHINE};6x_bootscript", "6x_bootscript-update.scr-${MACHINE};6x_bootscript", '', d)} \
     swupdate-image-${MACHINE}.cpio.gz.u-boot;swupdate.img \
     updates/*;updates/ \
 "
 
+
 RECOVERY_IMAGE_FILES_remove = "6x_bootscript-${MACHINE};6x_bootscript"
 
 WICVARS += "RECOVERY_IMAGE_FILES"
 
-# TODO: we need to have a virtual provider for u-boot-script-update, so that it
-# is not boundary specific
-do_image_wic[depends] += "swupdate-image:do_image_complete u-boot-script-update-boundary:do_deploy"
+do_image_wic[depends] += "swupdate-image:do_image_complete u-boot-script-regular:do_deploy u-boot-script-update:do_deploy"
 
 recovery_prepare() {
     # Create recovery mount point
