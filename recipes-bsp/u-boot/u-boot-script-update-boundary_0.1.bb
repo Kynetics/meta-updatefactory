@@ -28,10 +28,6 @@ addtask mkimage after do_compile before do_install
 
 do_compile[noexec] = "1"
 
-# Add compatibility with pre-2017.07 Boundary U-Boot releases
-# TODO: remove when nobody is using old U-Boot releases anymore
-do_deploy[depends] += "u-boot-script-update-boundary-legacy:do_deploy"
-
 do_install () {
     install -D -m 644 ${S}/${MACHINE}/boot-update.scr ${D}/boot-update.scr
 }
