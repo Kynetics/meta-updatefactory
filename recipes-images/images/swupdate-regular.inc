@@ -52,6 +52,7 @@ IMAGE_INSTALL_append = "\
 	rng-tools \
 "
 
-IMAGE_INSTALL_append = " \
-	swupdate-uf-cloud-agent \
-"
+python __anonymous () {
+	if d.getVar('DISTRO_UFCLOUDAGENT_SUPPORT', True) != "notinstalled":
+		d.appendVar('IMAGE_INSTALL', ' swupdate-uf-cloud-agent')
+}

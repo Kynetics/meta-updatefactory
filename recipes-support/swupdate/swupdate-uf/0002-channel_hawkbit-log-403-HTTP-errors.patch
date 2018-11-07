@@ -1,0 +1,37 @@
+From 75b188edf8e86ad52e17b04aeeb17dc47741770c Mon Sep 17 00:00:00 2001
+From: Diego Rondini <diego.rondini@kynetics.com>
+Date: Fri, 21 Jul 2017 13:56:20 +0200
+Subject: [PATCH 2/2] channel_hawkbit: log 403 HTTP errors
+
+Signed-off-by: Diego Rondini <diego.rondini@kynetics.com>
+---
+ corelib/channel_curl.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
+
+diff --git a/corelib/channel_curl.c b/corelib/channel_curl.c
+index e81f631..05fe5fe 100644
+--- a/corelib/channel_curl.c
++++ b/corelib/channel_curl.c
+@@ -1106,11 +1106,14 @@ channel_op_res_t channel_get(channel_t *this, void *data)
+ 	    CHANNEL_OK) {
+ 		ERROR("Channel operation returned HTTP error code %ld.",
+ 		      http_response_code);
+-		if (http_response_code == 500) {
+-			DEBUG("The error's message is: '%s'", chunk.memory);
+-		}
+-		if (http_response_code == 404) {
+-			DEBUG("The error's message is: '%s'", chunk.memory);
++		switch (http_response_code) {
++			case 403:
++			case 404:
++			case 500:
++				DEBUG("The error's message is: '%s'\n", chunk.memory);
++				break;
++			default:
++				break;
+ 		}
+ 		goto cleanup_chunk;
+ 	}
+-- 
+2.17.2
+
