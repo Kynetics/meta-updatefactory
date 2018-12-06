@@ -28,3 +28,8 @@ Please refer to:
 http://openembedded.org/wiki/Commit_Patch_Message_Guidelines  
 for some useful guidelines to be followed when submitting patches.
 
+## License
+
+All metadata is EPL-2.0 licensed (see COPYING.EPL-2.0) unless otherwise stated.
+Source code included in tree for individual recipes is under the LICENSE stated
+in the associated recipe (.bb file) unless otherwise stated.
