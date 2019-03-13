@@ -11,7 +11,7 @@ RDEPENDS_${PN} = "swupdate"
 
 S = "${WORKDIR}"
 
-PACKAGE_ARCH = "noarch"
+inherit allarch
 
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
