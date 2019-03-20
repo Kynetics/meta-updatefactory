@@ -9,6 +9,8 @@ SRC_URI = " \
 
 S = "${WORKDIR}"
 
+PROVIDES += "u-boot-script-update"
+
 inherit deploy
 
 BOOTSCRIPT ??= "${S}/bootscript-update.txt"
