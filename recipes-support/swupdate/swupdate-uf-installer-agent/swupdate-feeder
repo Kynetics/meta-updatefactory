@@ -3,38 +3,37 @@
 source /etc/swupdate/swupdate.env
 
 exit_failure() {
-        echo "Installation of ${UPDATE_FILE} failed."
         fw_setenv --script ${SWUPDATE_UBOOT_DIR}/install_failure.uenv
-        exit_reboot
+        finish
 }
 
 exit_success() {
-        echo "Installation of updates succeeded."
         fw_setenv --script ${SWUPDATE_UBOOT_DIR}/install_success.uenv
-        exit_reboot
+        finish
 }
 
-exit_reboot() {
+finish() {
         fw_setenv --script ${SWUPDATE_UBOOT_DIR}/update_finished.uenv
         rm -f ${SWUPDATE_UPDATES_DIR}/*.swu
-        reboot
         exit
 }
 
 
-UPDATE_FILES="$(find ${SWUPDATE_UPDATES_DIR}/ -name *.swu  -type f -maxdepth 1)"
+UPDATE_FILES=$(find ${SWUPDATE_UPDATES_DIR}/ -maxdepth 1 -name \*.swu  -type f | sort)
 # Check if there are updates to install
 if [ -z "${UPDATE_FILES}" ]; then
         echo "No update file to install."
         exit_failure
 fi
 # There are updates to install; proceed
-for UPDATE_FILE in "${UPDATE_FILES}"; do
+for UPDATE_FILE in ${UPDATE_FILES}; do
         echo "Starting installation of ${UPDATE_FILE}"
         swupdate -f /etc/swupdate/swupdate.cfg -i "${UPDATE_FILE}"
         SWUPDATE_RESULT=$?
         if [ $SWUPDATE_RESULT -ne 0 ]; then
+                echo "Installation of ${UPDATE_FILE} failed."
                 exit_failure
         fi
 done
+echo "Installation of updates succeeded."
 exit_success
