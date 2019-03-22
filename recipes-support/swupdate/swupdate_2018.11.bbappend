@@ -2,6 +2,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-uf:"
 
 SRC_URI += "\
 	file://swupdate.env \
+	file://test-sign_pub.pem \
 	file://0001-Log-save_state.patch \
 	file://0002-channel_hawkbit-log-403-HTTP-errors.patch \
 "
@@ -9,6 +10,7 @@ SRC_URI += "\
 do_install_append() {
   install -d ${D}${sysconfdir}/swupdate
   install -m 0644 ${WORKDIR}/swupdate.env ${D}${sysconfdir}/swupdate/
+  install -m 0644 ${WORKDIR}/test-sign_pub.pem ${D}${sysconfdir}/swupdate/sign_pub.pem
   rm ${D}${systemd_system_unitdir}/swupdate-usb@.service
 }
 
