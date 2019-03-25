@@ -31,7 +31,6 @@ PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="swupdate"
 NAME="swupdate"
 DAEMON=/usr/bin/swupdate
-CLIENT=/usr/bin/swupdate-feeder
 CONFIGFILE=/etc/swupdate/swupdate.cfg
 PIDFILE=/var/run/$NAME.pid
 ETH0_MAC_ADDRESS=`cat /sys/class/net/eth0/address`
@@ -60,11 +59,7 @@ do_start() {
 	*)
 		echo "Starting $DESC ..."
 		cd /home/root
-		if [ "$MODE" == "cloud" ]; then
-			exec $DAEMON -f "${CONFIGFILE}" -u "-s /recovery/updates/ -i device-${ETH0_MAC_ADDRESS}" &
-		else
-			exec $CLIENT 2>&1 | tee /recovery/updates/last_install.log &
-		fi
+		exec $DAEMON -f "${CONFIGFILE}" -o "/recovery/updates/update.swu" -n -u "-i device-${ETH0_MAC_ADDRESS}" &
 		exit 0
 		;;
 	esac
