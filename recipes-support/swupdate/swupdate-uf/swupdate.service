@@ -1,0 +1,12 @@
+[Unit]
+Description=SWUpdate daemon
+Documentation=https://github.com/sbabic/swupdate
+Documentation=https://sbabic.github.io/swupdate
+
+[Service]
+ExecStartPre=/bin/sh -c "/bin/systemctl set-environment DEVICE_ID=$$(/bin/cat /sys/class/net/eth0/address)"
+EnvironmentFile=-/etc/swupdate/swupdate.env
+ExecStart=/usr/bin/swupdate -f "${SWUPDATE_CONF_FILE}" -o "${SWUPDATE_UPDATES_DIR}/update.swu" -n -u "-i device-${DEVICE_ID}"
+
+[Install]
+WantedBy=multi-user.target
