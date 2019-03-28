@@ -28,10 +28,11 @@
 # PATH should only include /usr/* if it runs after the mountnfs.sh script
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 
+source /etc/swupdate/swupdate.env
+
 DESC="swupdate"
 NAME="swupdate"
 DAEMON=/usr/bin/swupdate
-CONFIGFILE=/etc/swupdate/swupdate.cfg
 PIDFILE=/var/run/$NAME.pid
 ETH0_MAC_ADDRESS=`cat /sys/class/net/eth0/address`
 
@@ -59,7 +60,7 @@ do_start() {
 	*)
 		echo "Starting $DESC ..."
 		cd /home/root
-		exec $DAEMON -f "${CONFIGFILE}" -o "/recovery/updates/update.swu" -n -u "-i device-${ETH0_MAC_ADDRESS}" &
+		exec $DAEMON -f "${SWUPDATE_CONF_FILE}" -o "${SWUPDATE_UPDATES_DIR}/update.swu" -n -u "-i device-${ETH0_MAC_ADDRESS}" &
 		exit 0
 		;;
 	esac
