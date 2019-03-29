@@ -1,7 +1,15 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-uf:"
 
+python() {
+    partitioning_mode = d.getVar("UF_PARTITIONING_MODE")
+    if partitioning_mode == "recovery-updates" or partitioning_mode == None:
+        d.setVar("UF_ENV_FILE","swupdate-recovery-updates.env")
+    elif partitioning_mode == "recovery":
+        d.setVar("UF_ENV_FILE","swupdate-recovery.env")
+}
+
 SRC_URI += "\
-	file://swupdate.env \
+	file://${UF_ENV_FILE} \
 	file://test-sign_pub.pem \
 	file://0001-Log-save_state.patch \
 	file://0002-channel_hawkbit-log-403-HTTP-errors.patch \
@@ -9,7 +17,7 @@ SRC_URI += "\
 
 do_install_append() {
   install -d ${D}${sysconfdir}/swupdate
-  install -m 0644 ${WORKDIR}/swupdate.env ${D}${sysconfdir}/swupdate/
+  install -m 0644 ${WORKDIR}/${UF_ENV_FILE} ${D}${sysconfdir}/swupdate/swupdate.env
   install -m 0644 ${WORKDIR}/test-sign_pub.pem ${D}${sysconfdir}/swupdate/sign_pub.pem
   rm ${D}${systemd_system_unitdir}/swupdate-usb@.service
 }

@@ -1,0 +1,5 @@
+# short-description: recovery partition
+# long-description: recovery partition with space for recovery boot files and
+# to store the update files.
+
+part /recovery --source filescopy --size 1000 --fstype=ext4 --label recovery --use-label --align 4

@@ -1,0 +1,9 @@
+# short-description: Create SD card image with boot, recovery and updates partitions
+# long-description: Creates a partitioned SD card image. Boot files are located
+# in the first vfat partition, recovery files for system update are located in
+# the third partition, dedicated storage partition to contain update files is
+# created as the fourth partition.
+
+include sdimage-bootpart.wks
+include recovery.wks
+include updates.wks

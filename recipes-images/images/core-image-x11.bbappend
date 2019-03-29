@@ -1,3 +1,3 @@
 require swupdate-regular.inc
 
-WKS_FILE = "sdimage-bootpart-recovery.wks"
+WKS_FILE = "sdimage-bootpart-${@d.getVar("UF_PARTITIONING_MODE")}.wks"

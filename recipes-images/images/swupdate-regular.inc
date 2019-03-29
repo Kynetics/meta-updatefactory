@@ -1,4 +1,9 @@
-WKS_FILE ?= "sdimage-bootpart-recovery.wks"
+python () {
+    if d.getVar("UF_PARTITIONING_MODE") == None:
+        bb.fatal("UF_PARTITIONING_MODE is not set in your local.conf or distro.conf")
+}
+
+WKS_FILE ?= "sdimage-bootpart-${@d.getVar("UF_PARTITIONING_MODE")}.wks"
 
 IMAGE_FSTYPES ?= "wic.gz wic.bmap"
 
@@ -15,7 +20,6 @@ RECOVERY_IMAGE_FILES = " \
     updates/*;updates/ \
 "
 
-
 RECOVERY_IMAGE_FILES_remove = "6x_bootscript-${MACHINE};6x_bootscript"
 
 WICVARS += "RECOVERY_IMAGE_FILES"
@@ -29,7 +33,21 @@ recovery_prepare() {
     grep -q -F 'LABEL=recovery' ${IMAGE_ROOTFS}/etc/fstab || echo 'LABEL=recovery       /recovery            ext4       defaults              0  0' >> ${IMAGE_ROOTFS}/etc/fstab
 }
 
-ROOTFS_POSTPROCESS_COMMAND += "recovery_prepare; "
+updates_prepare() {
+    # Create updates mount point
+    install -d ${IMAGE_ROOTFS}/recovery/updates
+    # Add updates partition fstab entry
+    grep -q -F 'LABEL=updates' ${IMAGE_ROOTFS}/etc/fstab || echo 'LABEL=updates       /recovery/updates            ext4       defaults              0  0' >> ${IMAGE_ROOTFS}/etc/fstab
+}
+
+def choose_partitioning_mode(d):
+    partitioning_mode = d.getVar("UF_PARTITIONING_MODE")
+    if  partitioning_mode == "recovery-updates":
+        return "updates_prepare"
+    elif (partitioning_mode == "recovery"):
+        return "recovery_prepare"
+
+ROOTFS_POSTPROCESS_COMMAND += "${@choose_partitioning_mode(d)}; "
 
 inherit deploy
 
