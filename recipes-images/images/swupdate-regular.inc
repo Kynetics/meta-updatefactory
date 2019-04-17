@@ -1,9 +1,9 @@
 python () {
-    if d.getVar("UF_PARTITIONING_MODE") == None:
+    if d.getVar("UF_PARTITIONING_MODE", True) == None:
         bb.fatal("UF_PARTITIONING_MODE is not set in your local.conf or distro.conf")
 }
 
-WKS_FILE ?= "sdimage-bootpart-${@d.getVar("UF_PARTITIONING_MODE")}.wks"
+WKS_FILE ?= "sdimage-bootpart-${@d.getVar("UF_PARTITIONING_MODE", True)}.wks"
 
 IMAGE_FSTYPES ?= "wic.gz wic.bmap"
 
@@ -41,7 +41,7 @@ updates_prepare() {
 }
 
 def choose_partitioning_mode(d):
-    partitioning_mode = d.getVar("UF_PARTITIONING_MODE")
+    partitioning_mode = d.getVar("UF_PARTITIONING_MODE", True)
     if  partitioning_mode == "recovery-updates":
         return "updates_prepare"
     elif (partitioning_mode == "recovery"):

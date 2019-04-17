@@ -1,7 +1,7 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-uf:"
 
 python() {
-    partitioning_mode = d.getVar("UF_PARTITIONING_MODE")
+    partitioning_mode = d.getVar("UF_PARTITIONING_MODE", True)
     if partitioning_mode == "recovery-updates" or partitioning_mode == None:
         d.setVar("UF_ENV_FILE","swupdate-recovery-updates.env")
     elif partitioning_mode == "recovery":
