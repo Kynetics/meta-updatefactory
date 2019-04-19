@@ -70,6 +70,6 @@ IMAGE_INSTALL_append = "\
 "
 
 python __anonymous () {
-	if d.getVar('DISTRO_UFCLOUDAGENT_SUPPORT', True) != "notinstalled":
-		d.appendVar('IMAGE_INSTALL', ' swupdate-uf-cloud-agent')
+    if d.getVar('DISTRO_UFCLOUDAGENT_SUPPORT', True) != "notinstalled":
+        d.appendVar('IMAGE_INSTALL', ' swupdate-uf-cloud-agent')
 }

@@ -25,9 +25,9 @@ do_install_append() {
 SYSTEMD_SERVICE_${PN}_remove = "swupdate-usb@.service"
 
 python __anonymous () {
-	distro_ufcloudagent_support = d.getVar('DISTRO_UFCLOUDAGENT_SUPPORT', True)
-	if distro_ufcloudagent_support == "enabled" :
-		d.setVar("SYSTEMD_AUTO_ENABLE_${PN}", "enable")
-	elif distro_ufcloudagent_support == "disabled" :
-		d.setVar("SYSTEMD_AUTO_ENABLE_${PN}", "disable")
+    distro_ufcloudagent_support = d.getVar('DISTRO_UFCLOUDAGENT_SUPPORT', True)
+    if distro_ufcloudagent_support == "enabled" :
+        d.setVar("SYSTEMD_AUTO_ENABLE_${PN}", "enable")
+    elif distro_ufcloudagent_support == "disabled" :
+        d.setVar("SYSTEMD_AUTO_ENABLE_${PN}", "disable")
 }
