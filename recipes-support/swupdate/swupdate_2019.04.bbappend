@@ -12,7 +12,6 @@ SRC_URI += "\
 	file://${UF_ENV_FILE} \
 	file://test-sign_pub.pem \
 	file://0001-Log-save_state.patch \
-	file://0002-channel_hawkbit-log-403-HTTP-errors.patch \
 "
 
 do_install_append() {
