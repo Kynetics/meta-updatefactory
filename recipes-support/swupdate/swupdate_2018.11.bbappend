@@ -26,8 +26,12 @@ SYSTEMD_SERVICE_${PN}_remove = "swupdate-usb@.service"
 
 python __anonymous () {
     distro_ufcloudagent_support = d.getVar('DISTRO_UFCLOUDAGENT_SUPPORT', True)
-    if distro_ufcloudagent_support == "enabled" :
-        d.setVar("SYSTEMD_AUTO_ENABLE_${PN}", "enable")
-    elif distro_ufcloudagent_support == "disabled" :
-        d.setVar("SYSTEMD_AUTO_ENABLE_${PN}", "disable")
+    if bb.utils.contains('DISTRO_FEATURES','systemd',True,False,d):
+        if distro_ufcloudagent_support == "enabled" :
+            d.setVar("SYSTEMD_AUTO_ENABLE_${PN}", "enable")
+        elif distro_ufcloudagent_support == "disabled" :
+            d.setVar("SYSTEMD_AUTO_ENABLE_${PN}", "disable")
+    elif bb.utils.contains('DISTRO_FEATURES','sysvinit',True,False,d):
+        if distro_ufcloudagent_support == "disabled" :
+            d.setVar("INITSCRIPT_PARAMS", "stop 70 .")
 }
