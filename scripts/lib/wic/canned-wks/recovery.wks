@@ -1,4 +1,4 @@
 # short-description: recovery partition
 # long-description: recovery partition with space for recovery boot files
 
-part --source filescopy --fstype=ext4 --label recovery --align 4
+part --source filescopy --fixed-size 100 --fstype=ext4 --label recovery --align 4

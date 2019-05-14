@@ -1,4 +1,4 @@
 # short-description: updates partition
 # long-description: updates partition with space to store the update files.
 
-part /recovery/updates --size 1000 --fstype=ext4 --label updates --use-label --align 4
+part /recovery/updates --fixed-size ${UF_UPDATES_PART_SIZE} --fstype=ext4 --label updates --use-label --align 4
