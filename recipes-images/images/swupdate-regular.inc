@@ -3,8 +3,9 @@ python () {
         bb.fatal("UF_PARTITIONING_MODE is not set in your local.conf or distro.conf")
 }
 
+UF_WKS_EXTRA_ARGS ?= ""
 UF_UPDATES_PART_SIZE ?= "800"
-WICVARS += "UF_UPDATES_PART_SIZE"
+WICVARS += "UF_UPDATES_PART_SIZE UF_WKS_EXTRA_ARGS"
 
 WKS_FILE ?= "sdimage-bootpart-${@d.getVar("UF_PARTITIONING_MODE", True)}.wks"
 

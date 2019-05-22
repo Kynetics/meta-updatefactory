@@ -2,4 +2,4 @@
 # long-description: recovery partition with space for recovery boot files and
 # to store the update files.
 
-part /recovery --source filescopy --fixed-size ${UF_UPDATES_PART_SIZE} --fstype=ext4 --label recovery --use-label --align 4
+part /recovery --source filescopy --fixed-size ${UF_UPDATES_PART_SIZE} --fstype=ext4 --label recovery --use-label --align 4 ${UF_WKS_EXTRA_ARGS}
