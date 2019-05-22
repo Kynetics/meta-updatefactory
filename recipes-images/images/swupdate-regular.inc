@@ -50,7 +50,7 @@ def choose_partitioning_mode(d):
     elif (partitioning_mode == "recovery"):
         return "recovery_prepare"
 
-ROOTFS_POSTPROCESS_COMMAND += "${@choose_partitioning_mode(d)}; "
+ROOTFS_POSTPROCESS_COMMAND_append = " ${@choose_partitioning_mode(d)}; "
 
 inherit deploy
 
