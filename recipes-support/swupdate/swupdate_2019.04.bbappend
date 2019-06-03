@@ -10,14 +10,14 @@ python() {
 
 SRC_URI += "\
 	file://${UF_ENV_FILE} \
-	file://test-sign_pub.pem \
+	file://sign_pub.pem \
 	file://0001-Log-save_state.patch \
 "
 
 do_install_append() {
   install -d ${D}${sysconfdir}/swupdate
   install -m 0644 ${WORKDIR}/${UF_ENV_FILE} ${D}${sysconfdir}/swupdate/swupdate.env
-  install -m 0644 ${WORKDIR}/test-sign_pub.pem ${D}${sysconfdir}/swupdate/sign_pub.pem
+  install -m 0644 ${WORKDIR}/sign_pub.pem ${D}${sysconfdir}/swupdate/sign_pub.pem
   rm ${D}${systemd_system_unitdir}/swupdate-usb@.service
 }
 
