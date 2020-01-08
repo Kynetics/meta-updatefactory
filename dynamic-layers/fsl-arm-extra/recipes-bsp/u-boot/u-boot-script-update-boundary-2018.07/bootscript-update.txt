@@ -144,6 +144,7 @@ if itest *${a_reset_cause_marker} == 12345678 ; then
 	setenv bootargs $bootargs reset_cause=0x${reset_cause}
 fi
 setenv bootargs ${bootargs} snd.slots=,snd-soc-imx-hdmi
+setenv bootargs ${bootargs} logo.nologo
 
 if itest.s "x" != "x${show_fdt}" ; then
 	fdt print /
