@@ -18,10 +18,7 @@ do_install_append() {
   install -d ${D}${sysconfdir}/swupdate
   install -m 0644 ${WORKDIR}/${UF_ENV_FILE} ${D}${sysconfdir}/swupdate/swupdate.env
   install -m 0644 ${WORKDIR}/sign_pub.pem ${D}${sysconfdir}/swupdate/sign_pub.pem
-  rm ${D}${systemd_system_unitdir}/swupdate-usb@.service
 }
-
-SYSTEMD_SERVICE_${PN}_remove = "swupdate-usb@.service"
 
 python __anonymous () {
     distro_ufcloudagent_support = d.getVar('DISTRO_UFCLOUDAGENT_SUPPORT', True)
