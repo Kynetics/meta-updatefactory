@@ -1,3 +1,5 @@
+FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+
 PROVIDES += "u-boot-script-regular"
 
 do_deploy_append () {
