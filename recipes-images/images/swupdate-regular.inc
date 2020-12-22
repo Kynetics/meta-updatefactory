@@ -33,15 +33,11 @@ do_image_wic[depends] += "swupdate-image:do_image_complete u-boot-script-regular
 recovery_prepare() {
     # Create recovery mount point
     install -d ${IMAGE_ROOTFS}/recovery
-    # Add recovery partition fstab entry
-    grep -q -F 'LABEL=recovery' ${IMAGE_ROOTFS}/etc/fstab || echo 'LABEL=recovery       /recovery            ext4       defaults              0  0' >> ${IMAGE_ROOTFS}/etc/fstab
 }
 
 updates_prepare() {
     # Create updates mount point
     install -d ${IMAGE_ROOTFS}/recovery/updates
-    # Add updates partition fstab entry
-    grep -q -F 'LABEL=updates' ${IMAGE_ROOTFS}/etc/fstab || echo 'LABEL=updates       /recovery/updates            ext4       defaults              0  0' >> ${IMAGE_ROOTFS}/etc/fstab
 }
 
 def choose_partitioning_mode(d):
