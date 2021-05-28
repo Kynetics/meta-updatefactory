@@ -1,22 +1,14 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-uf:"
 
-python() {
-    partitioning_mode = d.getVar("UF_PARTITIONING_MODE", True)
-    if partitioning_mode == "recovery-updates" or partitioning_mode == None:
-        d.setVar("UF_ENV_FILE","swupdate-recovery-updates.env")
-    elif partitioning_mode == "recovery":
-        d.setVar("UF_ENV_FILE","swupdate-recovery.env")
-}
-
 SRC_URI += "\
-	file://${UF_ENV_FILE} \
+	file://swupdate-updates.env \
 	file://sign_pub.pem \
 	file://0001-Log-save_state.patch \
 "
 
 do_install_append() {
   install -d ${D}${sysconfdir}/swupdate
-  install -m 0644 ${WORKDIR}/${UF_ENV_FILE} ${D}${sysconfdir}/swupdate/swupdate.env
+  install -m 0644 ${WORKDIR}/swupdate-updates.env ${D}${sysconfdir}/swupdate/swupdate.env
   install -m 0644 ${WORKDIR}/sign_pub.pem ${D}${sysconfdir}/swupdate/sign_pub.pem
 }
 

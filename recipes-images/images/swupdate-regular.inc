@@ -1,13 +1,8 @@
-python () {
-    if d.getVar("UF_PARTITIONING_MODE", True) == None:
-        bb.fatal("UF_PARTITIONING_MODE is not set in your local.conf or distro.conf")
-}
-
 UF_WKS_EXTRA_ARGS ?= ""
 UF_UPDATES_PART_SIZE ?= "800"
 WICVARS += "UF_UPDATES_PART_SIZE UF_WKS_EXTRA_ARGS"
 
-WKS_FILE ?= "sdimage-bootpart-${@d.getVar("UF_PARTITIONING_MODE", True)}.wks"
+WKS_FILE ?= "sdimage-bootpart-recovery-updates.wks"
 
 IMAGE_FSTYPES ?= "wic.gz wic.bmap"
 
@@ -30,24 +25,12 @@ WICVARS += "RECOVERY_IMAGE_FILES"
 
 do_image_wic[depends] += "swupdate-image:do_image_complete u-boot-script-regular:do_deploy u-boot-script-update:do_deploy"
 
-recovery_prepare() {
-    # Create recovery mount point
-    install -d ${IMAGE_ROOTFS}/recovery
-}
-
 updates_prepare() {
     # Create updates mount point
-    install -d ${IMAGE_ROOTFS}/recovery/updates
+    install -d ${IMAGE_ROOTFS}/updates
 }
 
-def choose_partitioning_mode(d):
-    partitioning_mode = d.getVar("UF_PARTITIONING_MODE", True)
-    if  partitioning_mode == "recovery-updates":
-        return "updates_prepare"
-    elif (partitioning_mode == "recovery"):
-        return "recovery_prepare"
-
-ROOTFS_POSTPROCESS_COMMAND_append = " ${@choose_partitioning_mode(d)}; "
+ROOTFS_POSTPROCESS_COMMAND_append = " updates_prepare; "
 
 inherit deploy
 
