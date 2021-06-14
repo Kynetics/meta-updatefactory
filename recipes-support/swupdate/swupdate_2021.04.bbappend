@@ -4,6 +4,7 @@ SRC_URI += "\
 	file://swupdate-updates.env \
 	file://sign_pub.pem \
 	file://0001-Log-save_state.patch \
+	file://0002-Revert-Don-t-run-pre-post-update-commands-in-dry-run.patch \
 "
 
 RDEPENDS_${PN} = "libgcc"
