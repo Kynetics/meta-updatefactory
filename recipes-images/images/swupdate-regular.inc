@@ -3,6 +3,7 @@ UF_UPDATES_PART_SIZE ?= "800"
 WICVARS += "UF_UPDATES_PART_SIZE UF_WKS_EXTRA_ARGS"
 
 WKS_FILE ?= "sdimage-bootpart-recovery-updates.wks"
+WKS_FILE_rpi ?= "sdimage-rpi-bootpart-recovery-updates.wks"
 
 IMAGE_FSTYPES ?= "wic.gz wic.bmap"
 
