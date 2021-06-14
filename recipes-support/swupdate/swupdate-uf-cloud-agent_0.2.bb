@@ -20,6 +20,7 @@ do_install_append() {
 	install -m 0644 ${WORKDIR}/update.env ${D}${sysconfdir}/swupdate/
 	install -m 0644 ${WORKDIR}/update_setup.uenv ${D}${sysconfdir}/swupdate/uboot/
 	install -m 0644 ${WORKDIR}/distro_bootcmd_prepend.uenv ${D}${sysconfdir}/swupdate/uboot/
+	install -d ${D}/updates
 }
 
-FILES_${PN} += " ${bindir}/* ${sysconfdir}/*"
+FILES_${PN} += " ${bindir}/* ${sysconfdir}/* /updates"
