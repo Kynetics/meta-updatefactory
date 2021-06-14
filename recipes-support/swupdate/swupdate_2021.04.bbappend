@@ -6,6 +6,8 @@ SRC_URI += "\
 	file://0001-Log-save_state.patch \
 "
 
+RDEPENDS_${PN} = "libgcc"
+
 do_install_append() {
   install -d ${D}${sysconfdir}/swupdate
   install -m 0644 ${WORKDIR}/swupdate-updates.env ${D}${sysconfdir}/swupdate/swupdate.env
