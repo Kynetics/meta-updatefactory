@@ -1,0 +1,4 @@
+# short-description: u-boot-env
+# long-description: Unpartitioned space occupied by U-Boot environment for RPi.
+
+part u-boot-env --source rawcopy --sourceparams="file=u-boot-env.bin" --no-table --align 4
