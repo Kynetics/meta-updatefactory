@@ -46,9 +46,26 @@ try_mount() {
 	fi
 }
 
+FW_UTILS_ATTEMPTS=30
+for i in $(seq 0 ${FW_UTILS_ATTEMPTS}) ; do
+	FW_UTILS_STD_ERROR="$(fw_printenv 2>&1 >/dev/null)"
+	FW_UTILS_ERROR_CODE="$?"
+	if [ ${FW_UTILS_ERROR_CODE} -ne 0 ]; then
+		if [ $i -eq ${FW_UTILS_ATTEMPTS} ]; then
+			echo "Error reading U-Boot environment"
+			echo "Reported FW utils error:"
+			echo "  ${FW_UTILS_STD_ERROR}"
+			echo "  error code: ${FW_UTILS_ERROR_CODE}"
+			echo "Halting execution, no update will be applied"
+			exit
+		fi
+		sleep 0.1
+	else
+		break;
+	fi
+done
 
 BOOT_MODE_OPTIONS="$(fw_printenv -n boot_mode_options 2>/dev/null)"
-
 if [ "${BOOT_MODE_OPTIONS}" = "emergency" ]; then
 	echo "Emergency mode requested"
 	sh
