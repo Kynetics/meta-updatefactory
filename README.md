@@ -2,10 +2,10 @@
 
 ## About Update Factory
 **Update Factory is an artifact content and software update delivery IoT Platform**. To learn more, please visit:  
-http://www.kynetics.com/update-factory
+https://www.kynetics.com/update-factory
 
 For Update Factory documentation visit:  
-http://docs.updatefactory.io/
+https://docs.updatefactory.io/
 
 ## meta-updatefactory integration
 This layer provides Yocto support on the device side for Update Factory platform.
