@@ -23,7 +23,14 @@ To integrate Update Factory support in your image you need to:
 
 A dedicated partition as storage space for `.swu` update files is mounted by default in /updates.
 
-Currently support has been tested with boards by Boundary Devices, Toradex and Variscite; more will come with time.
+Currently support has been tested with boards by:
+
+1. [Raspberry Pi](https://www.raspberrypi.org/) (RPi 4B)
+1. [Boundary Devices](https://boundarydevices.com/) (Nitrogen6x, Nitrogen8M)
+1. [Toradex](https://www.toradex.com/) (Apalis iMX6)
+1. [Variscite](https://www.variscite.com/) (VAR-SOM-MX7)
+
+The layer is designed to make it as easy as possible to add support for new hardware.
 
 ## Contributing
 To contribute to this layer you should open a GitHub pull request for review.
