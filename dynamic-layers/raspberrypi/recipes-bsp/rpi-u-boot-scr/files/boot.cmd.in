@@ -1,4 +1,4 @@
 fdt addr ${fdt_addr} && fdt get value bootargs /chosen bootargs
-setenv bootargs "${bootargs} fbcon=logo-pos:center fbcon=logo-count:1"
+setenv bootargs "${bootargs} fbcon=logo-pos:center fbcon=logo-count:1 vt.global_cursor_default=0"
 fatload mmc 0:1 ${kernel_addr_r} @@KERNEL_IMAGETYPE@@
 @@KERNEL_BOOTCMD@@ ${kernel_addr_r} - ${fdt_addr}
