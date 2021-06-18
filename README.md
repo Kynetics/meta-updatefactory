@@ -26,6 +26,9 @@ A dedicated partition as storage space for `.swu` update files is mounted by def
 Currently support has been tested with boards by:
 
 1. [Raspberry Pi](https://www.raspberrypi.org/) (RPi 4B)
+ set in you local.conf:\
+ ```RPI_USE_U_BOOT = "1"```\
+ to enable U-Boot support for RPi that is required by Update Factory
 1. [Boundary Devices](https://boundarydevices.com/) (Nitrogen6x, Nitrogen8M)
 1. [Toradex](https://www.toradex.com/) (Apalis iMX6)
 1. [Variscite](https://www.variscite.com/) (VAR-SOM-MX7)
