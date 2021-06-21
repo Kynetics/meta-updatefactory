@@ -1,3 +1,5 @@
+include partition-images.inc
+
 UF_WKS_EXTRA_ARGS ?= " "
 UF_UPDATES_PART_SIZE ?= "800"
 WICVARS += "UF_UPDATES_PART_SIZE UF_WKS_EXTRA_ARGS"
