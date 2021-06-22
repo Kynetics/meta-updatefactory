@@ -6,7 +6,7 @@
 # created as the fourth partition. The U-Boot environment is placed in an
 # unpartitioned space at 0x1000 KiB offset from the start
 
-include rpi-bootenv.wks
-include sdimage-bootpart.wks
-include recovery.wks
-include updates.wks
+include uf-rpi-bootenv.wks.in
+include uf-boot-root.wks.in
+include uf-recovery.wks.in
+include uf-updates.wks.in

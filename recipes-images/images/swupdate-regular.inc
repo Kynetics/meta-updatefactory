@@ -2,11 +2,13 @@ include partition-images.inc
 UF_COMPRESSED_PARTITIONS ?= ""boot 1" "root 2" "recovery 3""
 
 UF_WKS_EXTRA_ARGS ?= " "
+UF_BOOT_PART_SIZE ?= "100"
+UF_ROOT_PART_SIZE ?= "1000"
 UF_UPDATES_PART_SIZE ?= "800"
-WICVARS += "UF_UPDATES_PART_SIZE UF_WKS_EXTRA_ARGS"
+WICVARS += "UF_ROOT_PART_SIZE UF_BOOT_PART_SIZE UF_UPDATES_PART_SIZE UF_WKS_EXTRA_ARGS"
 
-WKS_FILE ?= "sdimage-bootpart-recovery-updates.wks"
-WKS_FILE_rpi ?= "sdimage-rpi-bootpart-recovery-updates.wks"
+WKS_FILE ?= "uf-boot-root-recovery-updates.wks"
+WKS_FILE_rpi ?= "uf-rpi-boot-root-recovery-updates.wks"
 
 IMAGE_FSTYPES ?= "wic.gz wic.bmap"
 

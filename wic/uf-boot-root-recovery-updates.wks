@@ -4,6 +4,6 @@
 # the third partition, dedicated storage partition to contain update files is
 # created as the fourth partition.
 
-include sdimage-bootpart.wks
-include recovery.wks
-include updates.wks
+include uf-boot-root.wks.in
+include uf-recovery.wks.in
+include uf-updates.wks.in
