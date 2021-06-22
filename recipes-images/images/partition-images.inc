@@ -1,7 +1,7 @@
 DEPENDS += "zstd-native"
 
 IMAGE_CMD_wic_append() {
-	for i in "boot 1" "root 2" "recovery 3"
+	for i in ${UF_COMPRESSED_PARTITIONS}
 	do
 		set -- $i
 		PARTLABEL=$1

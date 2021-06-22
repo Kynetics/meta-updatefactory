@@ -1,4 +1,5 @@
 include partition-images.inc
+UF_COMPRESSED_PARTITIONS ?= ""boot 1" "root 2" "recovery 3""
 
 UF_WKS_EXTRA_ARGS ?= " "
 UF_UPDATES_PART_SIZE ?= "800"
