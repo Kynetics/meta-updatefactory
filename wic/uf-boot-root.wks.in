@@ -1,0 +1,6 @@
+# short-description: Creates boot and root partitions
+# long-description: Creates fixed-size boot and root partitions. Boot files
+# are located in the first vfat partition.
+
+part /boot --source bootimg-partition --fstype=vfat --label boot --use-label --active --align 4 --fixed-size ${UF_BOOT_PART_SIZE}
+part / --source rootfs --fstype=ext4 --label root --align 4 --fixed-size ${UF_ROOT_PART_SIZE}
