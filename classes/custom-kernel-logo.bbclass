@@ -2,7 +2,7 @@ HOSTTOOLS += "pngtopnm ppmquant pnmnoraw"
 
 KERNEL_LOGO_PNG ?= "custom_logo.png"
 SRC_URI_append = " file://${KERNEL_LOGO_PNG}"
-SRC_URI[vardeps] += "KERNEL_LOGO_PNG"
+KERNEL_LOGO_PNG[vardeps] += "SRC_URI"
 
 kernel_conf_variable() {
 	CONF_SED_SCRIPT="$CONF_SED_SCRIPT /CONFIG_$1[ =]/d;"
