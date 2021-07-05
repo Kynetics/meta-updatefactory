@@ -5,4 +5,4 @@ SRC_URI += " \
 "
 
 inherit custom-kernel-logo
-KERNEL_LOGO_PNG = "uf_kernel_logo.png"
+KERNEL_LOGO_PNG = "ufLogo_1024x146.png"
