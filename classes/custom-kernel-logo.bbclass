@@ -1,4 +1,3 @@
-HOSTTOOLS += "pngtopnm ppmquant pnmnoraw"
 
 KERNEL_LOGO_PNG ?= "custom_logo.png"
 SRC_URI_append = " file://${KERNEL_LOGO_PNG}"
