@@ -9,9 +9,9 @@ SRC_URI += "\
 	file://update_finished.uenv \
 "
 
-RDEPENDS_${PN} += "swupdate-tools"
+RDEPENDS:${PN} += "swupdate-tools"
 
-do_install_append() {
+do_install:append() {
 	install -d ${D}${bindir}/
 	install -m 0755 ${WORKDIR}/swupdate-feeder ${D}${bindir}/
 	install -d ${D}${sysconfdir}/swupdate/uboot
@@ -20,4 +20,4 @@ do_install_append() {
 	install -m 0644 ${WORKDIR}/update_finished.uenv ${D}${sysconfdir}/swupdate/uboot/
 }
 
-FILES_${PN} += " ${bindir}/* ${sysconfdir}/*"
+FILES:${PN} += " ${bindir}/* ${sysconfdir}/*"

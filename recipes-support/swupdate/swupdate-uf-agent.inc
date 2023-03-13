@@ -7,7 +7,7 @@ SRC_URI = "\
 	file://GPLv2.patch \
 "
 
-RDEPENDS_${PN} = "swupdate"
+RDEPENDS:${PN} = "swupdate"
 
 S = "${WORKDIR}"
 
@@ -23,5 +23,5 @@ do_install () {
 	install -m 0644 ${WORKDIR}/swupdate-default ${D}${sysconfdir}/default/swupdate
 }
 
-FILES_${PN} = "${sysconfdir}/*"
-CONFFILES_${PN} += "${sysconfdir}/swupdate/swupdate.cfg ${sysconfdir}/default/swupdate"
+FILES:${PN} = "${sysconfdir}/*"
+CONFFILES:${PN} += "${sysconfdir}/swupdate/swupdate.cfg ${sysconfdir}/default/swupdate"

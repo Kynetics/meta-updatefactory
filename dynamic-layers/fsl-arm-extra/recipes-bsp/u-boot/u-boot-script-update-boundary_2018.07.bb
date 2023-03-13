@@ -44,7 +44,7 @@ do_deploy () {
 
 addtask deploy after do_install before do_build
 
-FILES_${PN} += "/"
+FILES:${PN} += "/"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 COMPATIBLE_MACHINE = "(nitrogen6x|nitrogen6x-lite|nitrogen6sx|nitrogen7|nitrogen8m)"

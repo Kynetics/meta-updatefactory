@@ -47,7 +47,7 @@ addtask deploy after do_install before do_build
 
 COMPATIBLE_MACHINE = "^rpi$"
 
-FILES_${PN} += "/"
+FILES:${PN} += "/"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 

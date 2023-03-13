@@ -1,6 +1,6 @@
 
 KERNEL_LOGO_PNG ?= "custom_logo.png"
-SRC_URI_append = " file://${KERNEL_LOGO_PNG}"
+SRC_URI:append = " file://${KERNEL_LOGO_PNG}"
 KERNEL_LOGO_PNG[vardeps] += "SRC_URI"
 
 kernel_conf_variable() {
@@ -13,7 +13,7 @@ kernel_conf_variable() {
 	fi
 }
 
-do_configure_prepend() {
+do_configure:prepend() {
 	if [ -e ${WORKDIR}/logo_linux_clut224.ppm ]; then
 		bbdebug 1 "Custom kernel logo detected"
 		install -m 0644 ${WORKDIR}/logo_linux_clut224.ppm ${S}/drivers/video/logo/logo_linux_clut224.ppm

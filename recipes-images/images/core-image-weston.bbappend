@@ -1,5 +1,5 @@
 require swupdate-regular.inc
 
-IMAGE_INSTALL_append = " weston-background"
+IMAGE_INSTALL:append = " weston-background"
 
-IMAGE_FEATURES_remove = "splash"
+IMAGE_FEATURES:remove = "splash"

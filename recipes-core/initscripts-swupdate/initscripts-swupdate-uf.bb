@@ -6,9 +6,9 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/EPL-2.0;md5=2dd765ca47a05140be1
 SRC_URI = "file://rcS.swupdate \
 	"
 
-RPROVIDES_${PN} += "virtual/initscripts-swupdate"
+RPROVIDES:${PN} += "virtual/initscripts-swupdate"
 
-RDEPENDS_${PN} = "util-linux-mount"
+RDEPENDS:${PN} = "util-linux-mount"
 
 S = "${WORKDIR}"
 
@@ -18,6 +18,6 @@ do_install () {
 }
 
 PACKAGES = "${PN}"
-FILES_${PN} = "${base_sbindir}"
+FILES:${PN} = "${base_sbindir}"
 
 inherit allarch

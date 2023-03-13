@@ -8,7 +8,7 @@ UF_UPDATES_PART_SIZE ?= "800"
 WICVARS += "UF_ROOT_PART_SIZE UF_BOOT_PART_SIZE UF_UPDATES_PART_SIZE UF_WKS_EXTRA_ARGS"
 
 WKS_FILE ?= "uf-boot-root-recovery-updates.wks"
-WKS_FILE_rpi ?= "uf-rpi-boot-root-recovery-updates.wks"
+WKS_FILE:rpi ?= "uf-rpi-boot-root-recovery-updates.wks"
 
 IMAGE_FSTYPES ?= "wic.gz wic.bmap"
 
@@ -24,19 +24,19 @@ RECOVERY_IMAGE_FILES = " \
     swupdate-image-${MACHINE}.cpio.gz.u-boot;swupdate.img \
 "
 
-RECOVERY_IMAGE_FILES_remove = "6x_bootscript-${MACHINE};6x_bootscript"
+RECOVERY_IMAGE_FILES:remove = "6x_bootscript-${MACHINE};6x_bootscript"
 
 WICVARS += "RECOVERY_IMAGE_FILES"
 
 do_image_wic[depends] += "swupdate-image:do_image_complete u-boot-script-regular:do_deploy u-boot-script-update:do_deploy"
 
 # Install U-Boot fw-utils to manually check / set environment
-IMAGE_INSTALL_append = "\
+IMAGE_INSTALL:append = "\
 	u-boot-fw-utils \
 "
 
 # Install rng-tools to increase entropy at boot
-IMAGE_INSTALL_append = "\
+IMAGE_INSTALL:append = "\
 	rng-tools \
 "
 

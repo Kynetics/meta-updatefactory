@@ -10,4 +10,4 @@ do_install() {
         install -m 644 ${WORKDIR}/${WESTON_BACKGROUND} ${D}${datadir}/backgrounds
 }
 
-FILES_${PN} = "${datadir}/backgrounds"
+FILES:${PN} = "${datadir}/backgrounds"

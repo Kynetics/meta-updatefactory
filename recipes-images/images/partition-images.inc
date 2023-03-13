@@ -1,6 +1,6 @@
 DEPENDS += "zstd-native"
 
-IMAGE_CMD_wic_append() {
+IMAGE_CMD:wic:append() {
 	for i in ${UF_COMPRESSED_PARTITIONS}
 	do
 		set -- $i

@@ -1,8 +1,8 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 PROVIDES += "u-boot-script-regular"
 
-do_deploy_append () {
+do_deploy:append () {
    ln -srf ${DEPLOYDIR}/boot.scr ${DEPLOYDIR}/boot-regular.scr-${MACHINE}
 }
 

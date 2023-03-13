@@ -1,3 +1,3 @@
 require swupdate-regular.inc
 
-IMAGE_FEATURES_remove = "splash"
+IMAGE_FEATURES:remove = "splash"

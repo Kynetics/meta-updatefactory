@@ -11,7 +11,7 @@ SRC_URI += "\
 	file://distro_bootcmd_prepend.uenv \
 "
 
-do_install_append() {
+do_install:append() {
 	install -d ${D}${bindir}/
 	install -m 0755 ${WORKDIR}/post_download.sh ${D}${bindir}/
 	install -m 0755 ${WORKDIR}/reboot_for_update.sh ${D}${bindir}/
@@ -23,4 +23,4 @@ do_install_append() {
 	install -d ${D}/updates
 }
 
-FILES_${PN} += " ${bindir}/* ${sysconfdir}/* /updates"
+FILES:${PN} += " ${bindir}/* ${sysconfdir}/* /updates"

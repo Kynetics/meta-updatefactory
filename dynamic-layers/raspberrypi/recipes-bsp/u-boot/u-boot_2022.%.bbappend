@@ -1,11 +1,11 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
-SRC_URI_append_rpi = " \
+SRC_URI:append:rpi = " \
 	file://env.cfg \
 "
 
-UBOOT_ENV_SIZE_rpi ?= "16384"
-do_compile_append_rpi() {
+UBOOT_ENV_SIZE:rpi ?= "16384"
+do_compile:append:rpi() {
     if [ -n "${UBOOT_CONFIG}" -o -n "${UBOOT_DELTA_CONFIG}" ]
     then
         unset i j k
@@ -31,7 +31,7 @@ do_compile_append_rpi() {
     fi
 }
 
-do_deploy_append_rpi() {
+do_deploy:append:rpi() {
     if [ -n "${UBOOT_CONFIG}" ]
     then
         for config in ${UBOOT_MACHINE}; do
