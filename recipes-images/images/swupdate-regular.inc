@@ -33,6 +33,7 @@ do_image_wic[depends] += "swupdate-image:do_image_complete u-boot-script-regular
 # Install U-Boot fw-utils to manually check / set environment
 IMAGE_INSTALL:append = "\
 	u-boot-fw-utils \
+	u-boot-env \
 "
 
 # Install rng-tools to increase entropy at boot

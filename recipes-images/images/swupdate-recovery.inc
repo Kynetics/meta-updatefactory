@@ -1,6 +1,7 @@
 # Install U-Boot fw-utils to manually check / set environment
 IMAGE_INSTALL:append = "\
 	u-boot-fw-utils \
+	u-boot-env \
 "
 
 SWUPDATE_INIT = "tiny"
