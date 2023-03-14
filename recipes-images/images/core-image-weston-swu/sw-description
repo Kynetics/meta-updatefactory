@@ -4,7 +4,7 @@ software =
 	images: (
 		{
 			filename = "core-image-weston.boot.img.zstd";
-			sha256 = "@core-image-weston.boot.img.zstd";
+			sha256 = "$swupdate_get_sha256(core-image-weston.boot.img.zstd)";
 			type = "raw";
 			device = "/dev/mmcblk0p1";
 			installed-directly = true;
@@ -12,7 +12,7 @@ software =
 		},
 		{
 			filename = "core-image-weston.root.img.zstd";
-			sha256 = "@core-image-weston.root.img.zstd";
+			sha256 = "$swupdate_get_sha256(core-image-weston.root.img.zstd)";
 			type = "raw";
 			device = "/dev/mmcblk0p2";
 			installed-directly = true;
@@ -20,7 +20,7 @@ software =
 		},
 		{
 			filename = "core-image-weston.recovery.img.zstd";
-			sha256 = "@core-image-weston.recovery.img.zstd";
+			sha256 = "$swupdate_get_sha256(core-image-weston.recovery.img.zstd)";
 			type = "raw";
 			device = "/dev/mmcblk0p3";
 			installed-directly = true;
