@@ -1,0 +1,30 @@
+read_part_copy() {
+	part=$1
+	var=$2
+	readlink -f /dev/disk/by-partlabel/${part}-${var}
+}
+
+find_dev_mounted() {
+	mp=$1
+	readlink -f $(findmnt ${mp} -n -o SOURCE)
+}
+
+part_copy=$(fw_printenv -n part_copy)
+prev_part_copy=$(fw_printenv -n prev_part_copy)
+
+if [ -n "$prev_part_copy" ]; then
+	root_dev=$(find_dev_mounted /)
+	if [ "$root_dev" = "$(read_part_copy root ${part_copy})" ]; then
+		fw_setenv swupdate_validation_state ${part_copy},2 prev_part_copy
+		echo "[system update] Update successfully validated"
+	elif [ "$root_dev" = "$(read_part_copy root ${prev_part_copy})" ]; then
+		fw_setenv part_copy ${prev_part_copy} swupdate_validation_state ${part_copy},3 prev_part_copy
+		echo "[system update] Update not correctly applied"
+	else
+		fw_setenv swupdate_validation_state ${part_copy},3
+		echo "[system update] Something went wrong while updating"
+	fi
+else
+        echo "[system update] No update applied"
+fi
+

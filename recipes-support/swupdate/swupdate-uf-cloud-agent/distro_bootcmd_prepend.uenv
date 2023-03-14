@@ -1,2 +1,0 @@
-bootcmd=run update_bootcmd; run distro_bootcmd
-update_bootcmd=if test "${boot_mode}" = "update"; then echo "Update mode selected"; setenv distro_bootpart 3; setenv scan_dev_for_boot_part run scan_dev_for_boot; fi

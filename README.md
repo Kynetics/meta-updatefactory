@@ -8,39 +8,38 @@ For Update Factory documentation visit:
 https://docs.updatefactory.io/
 
 ## meta-updatefactory integration
-This layer provides Yocto support on the device side for Update Factory platform.
+This layer provides support for the Update Factory platform to devices using a Yocto-based embedded Linux OS.
+Starting from Yocto release 4.0 (branch `kirkstone`) this layer implements the [double copy strategy](https://sbabic.github.io/swupdate/overview.html#double-copy). For those looking to implement a [single copy strategy](https://sbabic.github.io/swupdate/overview.html#single-copy-running-as-standalone-image), see [meta-updatefactory-singlecopy](https://github.com/Kynetics/meta-updatefactory-singlecopy).
 
 This layer depends on:
 
- - meta-swupdate
-   URI: https://github.com/sbabic/meta-swupdate.git
+ - meta-swupdate  
+   https://github.com/sbabic/meta-swupdate.git
 
 To integrate Update Factory support in your image you need to:
 
-1. include the following snippet in your image recipe:\
- ```require <relative-path-to>/recipes-images/images/swupdate-regular.inc```\
- (see for example `recipes-core/images/core-image-minimal.bbappend` and `recipes-images/images/core-image-x11.bbappend` in this layer)
-
-A dedicated partition as storage space for `.swu` update files is mounted by default in /updates.
+1. include the following snippet in your image recipe:  
+ ```require <relative-path-to>/recipes-images/images/swupdate-doublecopy.inc```  
+ (see for example `recipes-core/images/core-image-minimal.bbappend` and `recipes-images/images/core-image-weston.bbappend` in this layer)
 
 Currently support has been tested with boards by:
 
-1. [Raspberry Pi](https://www.raspberrypi.org/) (RPi 4B)
- set in you local.conf:\
- ```RPI_USE_U_BOOT = "1"```\
- to enable U-Boot support for RPi that is required by Update Factory
-1. [Boundary Devices](https://boundarydevices.com/) (Nitrogen6x, Nitrogen8M)
-1. [Toradex](https://www.toradex.com/) (Apalis iMX6)
-1. [Variscite](https://www.variscite.com/) (VAR-SOM-MX7)
+1. [Raspberry Pi](https://www.raspberrypi.org/) (RPi 4B)  
+ Please add:  
+ ```RPI_USE_U_BOOT = "1"```  
+ in your `local.conf` to enable U-Boot support for RPi that is required by Update Factory
+1. [Toradex](https://www.toradex.com/)
+1. [Boundary Devices](https://boundarydevices.com/)
+1. [Variscite](https://www.variscite.com/)
 
 The layer is designed to make it as easy as possible to add support for new hardware.
 
 ## Contributing
 To contribute to this layer you should open a GitHub pull request for review.
 
-Please refer to:
-http://openembedded.org/wiki/Commit_Patch_Message_Guidelines
-for some useful guidelines to be followed when submitting patches.
+Please refer to:  
+https://www.openembedded.org/wiki/Commit_Patch_Message_Guidelines  
+for some useful guidelines to follow when submitting patches.
 
 ## License
 

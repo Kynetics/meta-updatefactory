@@ -1,4 +1,0 @@
-# short-description: updates partition
-# long-description: updates partition with space to store the update files.
-
-part /updates --fixed-size ${UF_UPDATES_PART_SIZE} --fstype=ext4 --label updates --use-label --align 4 ${UF_WKS_EXTRA_ARGS}

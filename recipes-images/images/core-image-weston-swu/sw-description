@@ -1,30 +1,65 @@
 software =
 {
 	version = "@@DISTRO_VERSION@@";
-	images: (
-		{
-			filename = "core-image-weston.boot.img.zstd";
-			sha256 = "$swupdate_get_sha256(core-image-weston.boot.img.zstd)";
-			type = "raw";
-			device = "/dev/mmcblk0p1";
-			installed-directly = true;
-			compressed = "zstd";
-		},
-		{
-			filename = "core-image-weston.root.img.zstd";
-			sha256 = "$swupdate_get_sha256(core-image-weston.root.img.zstd)";
-			type = "raw";
-			device = "/dev/mmcblk0p2";
-			installed-directly = true;
-			compressed = "zstd";
-		},
-		{
-			filename = "core-image-weston.recovery.img.zstd";
-			sha256 = "$swupdate_get_sha256(core-image-weston.recovery.img.zstd)";
-			type = "raw";
-			device = "/dev/mmcblk0p3";
-			installed-directly = true;
-			compressed = "zstd";
-		}
-	);
+	stable = {
+		installToA: {
+			images: (
+				{
+					filename = "core-image-weston.boot.img.zstd";
+					sha256 = "$swupdate_get_sha256(core-image-weston.boot.img.zstd)";
+					type = "raw";
+					device = "/dev/disk/by-partlabel/boot-A";
+					compressed = "zstd";
+				},
+				{
+					filename = "core-image-weston.root.img.zstd";
+					sha256 = "$swupdate_get_sha256(core-image-weston.root.img.zstd)";
+					type = "raw";
+					device = "/dev/disk/by-partlabel/root-A";
+					compressed = "zstd";
+					installed-directly = true;
+				}
+			),
+			bootenv: (
+				{
+					name = "part_copy";
+					value = "A";
+				},
+				{
+					name = "prev_part_copy";
+					value = "B";
+				}
+			);
+		};
+		installToB: {
+			images: (
+				{
+					filename = "core-image-weston.boot.img.zstd";
+					sha256 = "$swupdate_get_sha256(core-image-weston.boot.img.zstd)";
+					type = "raw";
+					device = "/dev/disk/by-partlabel/boot-B";
+					compressed = "zstd";
+				},
+				{
+					filename = "core-image-weston.root.img.zstd";
+					sha256 = "$swupdate_get_sha256(core-image-weston.root.img.zstd)";
+					type = "raw";
+					device = "/dev/disk/by-partlabel/root-B";
+					compressed = "zstd";
+					installed-directly = true;
+				}
+			),
+			bootenv: (
+				{
+					name = "part_copy";
+					value = "B";
+				},
+				{
+					name = "prev_part_copy";
+					value = "A";
+				}
+			);
+		};
+	};
 }
+

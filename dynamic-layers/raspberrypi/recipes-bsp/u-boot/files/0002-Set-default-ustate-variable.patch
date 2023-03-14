@@ -1,0 +1,22 @@
+From 12e45f7c363e1b3effb4a84a9140a5e6f2e47dce Mon Sep 17 00:00:00 2001
+From: Dit Kozmaj <dit.kozmaj@kynetics.com>
+Date: Mon, 20 Mar 2023 09:13:30 +0000
+Subject: [PATCH] Set default ustate variable
+
+Signed-off-by: Dit Kozmaj <dit.kozmaj@kynetics.com>
+---
+ include/configs/rpi.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/include/configs/rpi.h b/include/configs/rpi.h
+index 52640bc5f0..a5b242960a 100644
+--- a/include/configs/rpi.h
++++ b/include/configs/rpi.h
+@@ -170,6 +170,7 @@
+ #include <config_distro_bootcmd.h>
+ 
+ #define CONFIG_EXTRA_ENV_SETTINGS \
++	"ustate=0\0" \
+ 	"part_copy=A\0" \
+ 	"dhcpuboot=usb start; dhcp u-boot.uimg; bootm\0" \
+ 	ENV_DEVICE_SETTINGS \

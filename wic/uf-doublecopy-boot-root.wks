@@ -1,0 +1,7 @@
+# short-description: Create image with double copy boot and root partitions
+# long-description: Creates a partitioned (SD card) image with double copy
+# (A/B) partitions.
+# Boot files are located in the boot-A and boot-B partitions.
+# Root files are located in the root-A and root-B partitions.
+
+include uf-doublecopy-boot-root.wks.in

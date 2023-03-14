@@ -1,0 +1,38 @@
+From d37e339ba01d66890d2c346f6e70b8d88c9d89a8 Mon Sep 17 00:00:00 2001
+From: Dit Kozmaj <dit.kozmaj@kynetics.com>
+Date: Wed, 15 Mar 2023 11:10:23 +0000
+Subject: [PATCH] Add double copy support for rpi
+
+Signed-off-by: Dit Kozmaj <dit.kozmaj@kynetics.com>
+---
+ include/configs/rpi.h | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/include/configs/rpi.h b/include/configs/rpi.h
+index 4c5c1ac31f..52640bc5f0 100644
+--- a/include/configs/rpi.h
++++ b/include/configs/rpi.h
+@@ -170,11 +170,22 @@
+ #include <config_distro_bootcmd.h>
+ 
+ #define CONFIG_EXTRA_ENV_SETTINGS \
++	"part_copy=A\0" \
+ 	"dhcpuboot=usb start; dhcp u-boot.uimg; bootm\0" \
+ 	ENV_DEVICE_SETTINGS \
+ 	ENV_DFU_SETTINGS \
+ 	ENV_MEM_LAYOUT_SETTINGS \
+-	BOOTENV
++	BOOTENV \
++	 "scan_dev_for_boot_part="                                                  \
++	 "if test x${part_copy} = xA || test x${part_copy} = xB; then; "    \
++	    "echo Loading from copy ${part_copy}...; "                         \
++	 "else echo FATAL: double copy support not found, "                 \
++	 "invalid part_copy=${part_copy}. Aborting...; exit; fi;"           \
++	 "if part number ${devtype} ${devnum} boot-${part_copy} bootpart; " \
++	    "then; setenv distro_bootpart ${bootpart}; "                       \
++	    "run scan_dev_for_boot; "                                          \
++	 "else echo FATAL: cannot find boot part. Aborting...; "            \
++	 "setenv distro_bootpart; exit; fi\0"                               \
+ 
+ 
+ #endif

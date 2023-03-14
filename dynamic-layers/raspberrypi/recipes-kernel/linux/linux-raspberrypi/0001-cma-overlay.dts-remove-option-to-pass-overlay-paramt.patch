@@ -1,0 +1,97 @@
+From be13ee25cc03528449d376b7a28fa630fc2e1875 Mon Sep 17 00:00:00 2001
+From: Jacopo Dall'Aglio <jacopo.dallaglio@kynetics.com>
+Date: Fri, 28 Jan 2022 10:27:30 +0000
+Subject: [PATCH] cma-overlay.dts: remove option to pass overlay paramters
+
+Applying overlay via U-Boot doesn't allow to pass parameters.
+Fixing the CMA memory allocation to 256 MB circumvents the
+issue.
+
+Signed-off-by: Jacopo Dall'Aglio <jacopo.dallaglio@kynetics.com>
+---
+ arch/arm/boot/dts/overlays/cma-overlay.dts    | 28 +++++++++----------
+ .../dts/overlays/vc4-fkms-v3d-pi4-overlay.dts |  6 ++--
+ .../dts/overlays/vc4-kms-v3d-pi4-overlay.dts  |  6 ++--
+ 3 files changed, 20 insertions(+), 20 deletions(-)
+
+diff --git a/arch/arm/boot/dts/overlays/cma-overlay.dts b/arch/arm/boot/dts/overlays/cma-overlay.dts
+index 1d87c599f909..86f7c4ad7f3f 100644
+--- a/arch/arm/boot/dts/overlays/cma-overlay.dts
++++ b/arch/arm/boot/dts/overlays/cma-overlay.dts
+@@ -10,7 +10,7 @@ / {
+ 
+ 	fragment@0 {
+ 		target = <&cma>;
+-		frag0: __overlay__ {
++		__overlay__ {
+ 			/*
+ 			 * The default size when using this overlay is 256 MB
+ 			 * and should be kept as is for backwards
+@@ -20,17 +20,17 @@ frag0: __overlay__ {
+ 		};
+ 	};
+ 
+-	__overrides__ {
+-		cma-512 = <&frag0>,"size:0=",<0x20000000>;
+-		cma-448 = <&frag0>,"size:0=",<0x1c000000>;
+-		cma-384 = <&frag0>,"size:0=",<0x18000000>;
+-		cma-320 = <&frag0>,"size:0=",<0x14000000>;
+-		cma-256 = <&frag0>,"size:0=",<0x10000000>;
+-		cma-192 = <&frag0>,"size:0=",<0xC000000>;
+-		cma-128 = <&frag0>,"size:0=",<0x8000000>;
+-		cma-96  = <&frag0>,"size:0=",<0x6000000>;
+-		cma-64  = <&frag0>,"size:0=",<0x4000000>;
+-		cma-size = <&frag0>,"size:0"; /* in bytes, 4MB aligned */
+-		cma-default = <0>,"-0";
+-	};
++//	__overrides__ {
++//		cma-512 = <&frag0>,"size:0=",<0x20000000>;
++//		cma-448 = <&frag0>,"size:0=",<0x1c000000>;
++//		cma-384 = <&frag0>,"size:0=",<0x18000000>;
++//		cma-320 = <&frag0>,"size:0=",<0x14000000>;
++//		cma-256 = <&frag0>,"size:0=",<0x10000000>;
++//		cma-192 = <&frag0>,"size:0=",<0xC000000>;
++//		cma-128 = <&frag0>,"size:0=",<0x8000000>;
++//		cma-96  = <&frag0>,"size:0=",<0x6000000>;
++//		cma-64  = <&frag0>,"size:0=",<0x4000000>;
++//		cma-size = <&frag0>,"size:0"; /* in bytes, 4MB aligned */
++//		cma-default = <0>,"-0";
++//	};
+ };
+diff --git a/arch/arm/boot/dts/overlays/vc4-fkms-v3d-pi4-overlay.dts b/arch/arm/boot/dts/overlays/vc4-fkms-v3d-pi4-overlay.dts
+index 7792ead0cbb3..be713ec07603 100644
+--- a/arch/arm/boot/dts/overlays/vc4-fkms-v3d-pi4-overlay.dts
++++ b/arch/arm/boot/dts/overlays/vc4-fkms-v3d-pi4-overlay.dts
+@@ -7,9 +7,9 @@
+ 
+ #include "cma-overlay.dts"
+ 
+-&frag0 {
+-	size = <((320-4)*1024*1024)>;
+-};
++//&frag0 {
++//	size = <((320-4)*1024*1024)>;
++//};
+ 
+ / {
+ 	compatible = "brcm,bcm2711";
+diff --git a/arch/arm/boot/dts/overlays/vc4-kms-v3d-pi4-overlay.dts b/arch/arm/boot/dts/overlays/vc4-kms-v3d-pi4-overlay.dts
+index 76229cad7803..93cfd2aa14bd 100644
+--- a/arch/arm/boot/dts/overlays/vc4-kms-v3d-pi4-overlay.dts
++++ b/arch/arm/boot/dts/overlays/vc4-kms-v3d-pi4-overlay.dts
+@@ -9,9 +9,9 @@
+ 
+ #include "cma-overlay.dts"
+ 
+-&frag0 {
+-	size = <((320-4)*1024*1024)>;
+-};
++//&frag0 {
++//	size = <((320-4)*1024*1024)>;
++//};
+ 
+ / {
+ 	compatible = "brcm,bcm2711";
+-- 
+2.25.1
+

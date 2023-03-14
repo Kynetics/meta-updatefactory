@@ -1,4 +1,6 @@
-# short-description: u-boot-env
-# long-description: Unpartitioned space occupied by U-Boot environment for RPi.
+# short-description: u-boot-env and rpiboot
+# long-description: Unpartitioned space occupied by U-Boot environment for RPi
+# and boot partition for RPi spcific boot files.
 
-part u-boot-env --source rawcopy --sourceparams="file=u-boot-env.bin" --no-table --align 4
+part u-boot-env --source rawcopy --sourceparams="file=u-boot-env.bin" --no-table --align 4 
+part --source bootimg-partition --fstype=vfat --label rpiboot --active --align ${BOOT_ALIGN_KB} --fixed-size ${UF_BOOT_PART_SIZE}

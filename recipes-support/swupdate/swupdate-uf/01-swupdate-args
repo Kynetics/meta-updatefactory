@@ -1,0 +1,4 @@
+source /etc/swupdate/swupdate.env
+SWUPDATE_SURICATTA_ARGS="-i device-${DEVICE_ID}"
+SWUPDATE_ARGS="${SWUPDATE_ARGS} -f ${SWUPDATE_CONF_FILE}"
+

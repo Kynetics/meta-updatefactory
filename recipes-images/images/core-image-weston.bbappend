@@ -1,4 +1,4 @@
-require swupdate-regular.inc
+require swupdate-doublecopy.inc
 
 IMAGE_INSTALL:append = " weston-background"
 

@@ -1,7 +1,9 @@
-FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS:prepend:rpi := "${THISDIR}/files:"
 
 SRC_URI:append:rpi = " \
 	file://env.cfg \
+	file://0001-Add-double-copy-support-for-rpi.patch \
+	file://0002-Set-default-ustate-variable.patch \
 "
 
 UBOOT_ENV_SIZE:rpi ?= "16384"

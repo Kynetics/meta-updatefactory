@@ -1,0 +1,2 @@
+SWUPDATE_ARGS="${SWUPDATE_ARGS} -k /etc/swupdate/sign_pub.pem"
+

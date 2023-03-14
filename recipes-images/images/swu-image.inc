@@ -11,7 +11,7 @@ do_swuimage[depends] += "${UF_IMAGE}:do_image_complete"
 
 SWUPDATE_SIGNING = "RSA"
 SWUPDATE_IMAGES += "${UF_IMAGE}"
-UF_SWUPDATE_IMAGES_FSTYPES ?= ".boot.img.zstd .root.img.zstd .recovery.img.zstd"
+UF_SWUPDATE_IMAGES_FSTYPES ?= ".boot.img.zstd .root.img.zstd"
 
 python() {
     flag = d.getVar('UF_IMAGE')

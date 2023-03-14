@@ -1,1 +1,1 @@
-require ../../recipes-images/images/swupdate-regular.inc
+require ../../recipes-images/images/swupdate-doublecopy.inc

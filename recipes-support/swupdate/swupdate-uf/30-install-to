@@ -1,0 +1,13 @@
+root_dev=$(find_dev_mounted /)
+if [ "$root_dev" = "$(read_part_copy root A)" ]; then
+	MODE=installToB
+elif [ "$root_dev" = "$(read_part_copy root B)" ]; then
+	MODE=installToA
+else
+	echo "Cannot apply update. ABORTING... "
+fi
+
+if [ -n "${MODE}" ]; then
+	SWUPDATE_ARGS="${SWUPDATE_ARGS} -e stable,${MODE}"
+fi
+

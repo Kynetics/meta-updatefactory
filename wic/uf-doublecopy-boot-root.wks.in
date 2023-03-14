@@ -1,0 +1,11 @@
+# short-description: Creates dualcopy boot and root partitions.
+# long-description: Creates dualcopy boot and root partitions.
+# Use of GPT partition table is mandatory
+
+part --source filescopy --fstype=ext4 --part-name boot-A --label boot --align 4 --fixed-size ${UF_BOOT_PART_SIZE}
+part --part-name boot-B --fstype=ext4 --align 4 --fixed-size ${UF_BOOT_PART_SIZE}
+
+part / --source rootfs --fstype=ext4 --part-name root-A --label root --align 4 --fixed-size ${UF_ROOT_PART_SIZE} --mkfs-extraopts '-F -i 8192 -m 1' --exclude-path boot/
+part --part-name root-B --fstype=ext4 --align 4 --fixed-size ${UF_ROOT_PART_SIZE}
+
+bootloader --ptable gpt

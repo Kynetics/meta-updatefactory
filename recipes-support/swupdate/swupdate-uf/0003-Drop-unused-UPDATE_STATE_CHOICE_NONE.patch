@@ -1,0 +1,35 @@
+From 420aca48857171ea8d4fc072e0914a31e7974956 Mon Sep 17 00:00:00 2001
+From: Stefano Babic <sbabic@denx.de>
+Date: Wed, 1 Mar 2023 09:15:58 +0100
+Subject: [PATCH] Drop unused UPDATE_STATE_CHOICE_NONE
+
+How to store the ustate variable can be decided at runtime, using the -m
+(--no-state-marker) switch, or per update adding the
+bootloader_state_marker to sw-description. Previously config option
+UPDATE_STATE_CHOICE_NONE is currently unused and there is no code for
+it, so just drop it.
+
+Signed-off-by: Stefano Babic <sbabic@denx.de>
+---
+ bootloader/Config.in | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/bootloader/Config.in b/bootloader/Config.in
+index 1744b61..f1bb40f 100644
+--- a/bootloader/Config.in
++++ b/bootloader/Config.in
+@@ -105,11 +105,6 @@ choice
+ 	  status for, e.g., communicating it to SWUpdate after
+ 	  a reboot.
+ 
+-config UPDATE_STATE_CHOICE_NONE
+-	bool "None"
+-	help
+-	  Do not store update status.
+-
+ config UPDATE_STATE_CHOICE_BOOTLOADER
+ 	bool "Bootloader"
+ 	depends on BOOTLOADER_EBG || UBOOT || BOOTLOADER_NONE || BOOTLOADER_GRUB
+-- 
+2.25.1
+

@@ -1,28 +1,31 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}-uf:"
 
 SRC_URI += "\
+file://sign_pub.pem \
+	file://01-swupdate-args \
+	file://10-validate-update \
+	file://15-finalize-update \
+	file://20-pubkey \
+	file://30-install-to \
 	file://swupdate-updates.env \
-	file://sign_pub.pem \
 	file://0001-Log-save_state.patch \
-	file://0002-Revert-Don-t-run-pre-post-update-commands-in-dry-run.patch \
+	file://0003-Drop-unused-UPDATE_STATE_CHOICE_NONE.patch \
+	file://swupdate.cfg \
 "
+
 
 RDEPENDS:${PN} = "libgcc"
 
 do_install:append() {
-  install -d ${D}${sysconfdir}/swupdate
-  install -m 0644 ${WORKDIR}/swupdate-updates.env ${D}${sysconfdir}/swupdate/swupdate.env
-  install -m 0644 ${WORKDIR}/sign_pub.pem ${D}${sysconfdir}/swupdate/sign_pub.pem
-}
+	install -d ${D}${sysconfdir}/swupdate
+	install -m 0644 ${WORKDIR}/swupdate-updates.env ${D}${sysconfdir}/swupdate/swupdate.env
+	install -m 0644 ${WORKDIR}/sign_pub.pem ${D}${sysconfdir}/swupdate/sign_pub.pem
 
-python __anonymous () {
-    distro_ufcloudagent_support = d.getVar('DISTRO_UFCLOUDAGENT_SUPPORT', True)
-    if bb.utils.contains('DISTRO_FEATURES','systemd',True,False,d):
-        if distro_ufcloudagent_support == "enabled" :
-            d.setVar("SYSTEMD_AUTO_ENABLE:${PN}", "enable")
-        elif distro_ufcloudagent_support == "disabled" :
-            d.setVar("SYSTEMD_AUTO_ENABLE:${PN}", "disable")
-    elif bb.utils.contains('DISTRO_FEATURES','sysvinit',True,False,d):
-        if distro_ufcloudagent_support == "disabled" :
-            d.setVar("INITSCRIPT_PARAMS", "stop 70 .")
+	install -d ${D}${sysconfdir}/swupdate/conf.d
+	install -m 0644 ${WORKDIR}/01-swupdate-args ${D}${sysconfdir}/swupdate/conf.d
+	install -m 0644 ${WORKDIR}/10-validate-update ${D}${sysconfdir}/swupdate/conf.d
+	install -m 0644 ${WORKDIR}/15-finalize-update ${D}${sysconfdir}/swupdate/conf.d
+	install -m 0644 ${WORKDIR}/20-pubkey ${D}${sysconfdir}/swupdate/conf.d
+	install -m 0644 ${WORKDIR}/30-install-to ${D}${sysconfdir}/swupdate/conf.d
+	install -m 0644 ${WORKDIR}/swupdate.cfg ${D}${sysconfdir}/swupdate/
 }

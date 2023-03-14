@@ -17,7 +17,7 @@
 # DESCRIPTION
 # This implements the 'filescopy' source plugin class for
 # 'wic'. The plugin creates an image of a partition, copying over
-# files listed in <label>_IMAGE_FILES bitbake variable.
+# files listed in FILESCOPY_<label>_IMAGE_FILES bitbake variable.
 #
 # AUTHORS
 # Maciej Borzecki <maciej.borzecki (at] open-rnd.pl>
@@ -39,7 +39,7 @@ logger = logging.getLogger('wic')
 class FilesCopyPlugin(SourcePlugin):
     """
     Create an image of a partition, copying over files
-    listed in <label>_IMAGE_FILES bitbake variable.
+    listed in FILESCOPY_<label>_IMAGE_FILES bitbake variable.
     """
 
     name = 'filescopy'
@@ -53,7 +53,7 @@ class FilesCopyPlugin(SourcePlugin):
         'prepares' the partition to be incorporated into the image.
         In this case, does the following:
         - sets up a partition
-        - copies all files listed in <label>_IMAGE_FILES variable
+        - copies all files listed in FILESCOPY_<label>_IMAGE_FILES variable
         """
         if part.label is None:
             logger.error('Label parameter is mandatory in {0} plugin'.format(name));
@@ -69,7 +69,7 @@ class FilesCopyPlugin(SourcePlugin):
 
         logger.debug('Kernel dir: %s', bootimg_dir)
 
-        image_files_var = "{0}_IMAGE_FILES".format(part.label.upper())
+        image_files_var = "FILESCOPY_{0}_IMAGE_FILES".format(part.label.upper())
         partition_files = get_bitbake_var(image_files_var)
 
         if not partition_files:
