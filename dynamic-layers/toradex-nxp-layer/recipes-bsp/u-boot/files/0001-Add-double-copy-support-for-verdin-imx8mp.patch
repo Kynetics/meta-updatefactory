@@ -1,0 +1,35 @@
+From a714ce799fe03723bcab16ce2c2280f2349ba32e Mon Sep 17 00:00:00 2001
+From: Dit Kozmaj <dit.kozmaj@kynetics.com>
+Date: Fri, 31 Mar 2023 14:12:40 +0000
+Subject: [PATCH] Add double-copy support for verdin-imx8mp
+
+---
+ include/configs/verdin-imx8mp.h | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/include/configs/verdin-imx8mp.h b/include/configs/verdin-imx8mp.h
+index 616cc3f945..0f3c418851 100644
+--- a/include/configs/verdin-imx8mp.h
++++ b/include/configs/verdin-imx8mp.h
+@@ -78,6 +78,18 @@
+ /* Initial environment variables */
+ #define CONFIG_EXTRA_ENV_SETTINGS \
+ 	BOOTENV \
++	"ustate=0\0" \
++	"part_copy=A\0" \
++	"scan_dev_for_boot_part=" \
++	"if test x${part_copy} = xA || test x${part_copy} = xB; then; " \
++	"echo Loading from ${part_copy}...;" \
++	"else echo FATAL: double copy support not found." \
++	"Invalid part_copy=${part_copy}. ABORTING...; exit; fi;" \
++	"if part number ${devtype} ${devnum} boot-${part_copy} bootpart; " \
++	"then; setenv distro_bootpart ${bootpart}; " \
++	"run scan_dev_for_boot; " \
++	"else echo FATAL: cannot find boot part. Aborting...; " \
++	"setenv distro_bootpart; exit; fi\0" \
+ 	MEM_LAYOUT_ENV_SETTINGS \
+ 	"bootcmd_mfg=fastboot 0\0" \
+ 	"boot_file=Image\0" \
+-- 
+2.25.1
+
