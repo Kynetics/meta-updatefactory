@@ -1,15 +1,15 @@
 USTATE=$(fw_printenv -n ustate)
+SEPARATOR=','
 
 if [ -n "$USTATE" ] && [ "$USTATE" != 0 ]; then
-	PART=$(fw_printenv -n part_copy)
-	VALIDATION_STATE=$(fw_printenv -n swupdate_validation_state)
-	PARTITION_VALIDATION=(${VALIDATION_STATE//","/ })
-	if [ -n "$VALIDATION_STATE" ] && [ "${PARTITION_VALIDATION[0]}" = "$PART" ]; then
-		SWUPDATE_SURICATTA_ARGS="${SWUPDATE_SURICATTA_ARGS} -c ${PARTITION_VALIDATION[1]}"
-		echo "[system update] Update state message prepared to be sent to server"
-	else
-		echo "[system update] No update state communicated to server"
-	fi
+        PART=$(fw_printenv -n part_copy)
+        VALIDATION_STATE=$(fw_printenv -n swupdate_validation_state)
+        if [ -n "$VALIDATION_STATE" ] && [ ${VALIDATION_STATE%%"$SEPARATOR"*} = "$PART" ]; then
+                SWUPDATE_SURICATTA_ARGS="${SWUPDATE_SURICATTA_ARGS} -c ${VALIDATION_STATE##*"$SEPARATOR"}"
+                echo "[system update] Update state message prepared to be sent to server"
+        else
+                echo "[system update] No update state communicated to server"
+        fi
 else
-	echo "[system update] No update pending"
+        echo "[system update] No update pending"
 fi
