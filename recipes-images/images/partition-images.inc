@@ -1,12 +1,22 @@
-DEPENDS += "zstd-native"
+UF_COMPRESSION_FORMAT ?= "zstd"
+DEPENDS += "${@oe.utils.conditional('UF_COMPRESSION_FORMAT', 'zstd', 'zstd-native', '', d)}"
+DEPENDS += "${@oe.utils.conditional('UF_COMPRESSION_FORMAT', 'zlib', 'gzip-native', '', d)}"
 
 IMAGE_CMD:wic:append() {
+	UF_COMPRESSION_COMMAND="zstdmt"
+	UF_COMPRESSION_EXTENSION="zst"
+
+	if [ ${UF_COMPRESSION_FORMAT} == "zlib" ]; then
+		UF_COMPRESSION_COMMAND="gzip"
+		UF_COMPRESSION_EXTENSION="gz"
+	fi
+
 	for i in ${UF_COMPRESSED_PARTITIONS}
 	do
 		set -- $i
 		PARTLABEL=$1
 		PARTNUMBER=$2
-		zstd -f -T0 -c ${WORKDIR}/build-wic/*.direct.p${PARTNUMBER} > ${IMGDEPLOYDIR}/${IMAGE_NAME}.${PARTLABEL}.img.zstd
-		ln -sfr ${IMGDEPLOYDIR}/${IMAGE_NAME}.${PARTLABEL}.img.zstd ${IMGDEPLOYDIR}/${IMAGE_BASENAME}.${PARTLABEL}.img.zstd
+		${UF_COMPRESSION_COMMAND} -f  -c ${WORKDIR}/build-wic/*.direct.p${PARTNUMBER} > ${IMGDEPLOYDIR}/${IMAGE_NAME}.${PARTLABEL}.img.${UF_COMPRESSION_EXTENSION}
+		ln -sfr ${IMGDEPLOYDIR}/${IMAGE_NAME}.${PARTLABEL}.img.${UF_COMPRESSION_EXTENSION} ${IMGDEPLOYDIR}/${IMAGE_BASENAME}.${PARTLABEL}.img.${UF_COMPRESSION_EXTENSION}
 	done
 }
