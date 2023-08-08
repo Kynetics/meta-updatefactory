@@ -5,15 +5,15 @@ software =
 		installToA: {
 			images: (
 				{
-					filename = "core-image-weston.boot.img.zstd";
-					sha256 = "$swupdate_get_sha256(core-image-weston.boot.img.zstd)";
+					filename = "core-image-weston.boot.img.zst";
+					sha256 = "$swupdate_get_sha256(core-image-weston.boot.img.zst)";
 					type = "raw";
 					device = "/dev/disk/by-partlabel/boot-A";
 					compressed = "zstd";
 				},
 				{
-					filename = "core-image-weston.root.img.zstd";
-					sha256 = "$swupdate_get_sha256(core-image-weston.root.img.zstd)";
+					filename = "core-image-weston.root.img.zst";
+					sha256 = "$swupdate_get_sha256(core-image-weston.root.img.zst)";
 					type = "raw";
 					device = "/dev/disk/by-partlabel/root-A";
 					compressed = "zstd";
@@ -34,15 +34,15 @@ software =
 		installToB: {
 			images: (
 				{
-					filename = "core-image-weston.boot.img.zstd";
-					sha256 = "$swupdate_get_sha256(core-image-weston.boot.img.zstd)";
+					filename = "core-image-weston.boot.img.zst";
+					sha256 = "$swupdate_get_sha256(core-image-weston.boot.img.zst)";
 					type = "raw";
 					device = "/dev/disk/by-partlabel/boot-B";
 					compressed = "zstd";
 				},
 				{
-					filename = "core-image-weston.root.img.zstd";
-					sha256 = "$swupdate_get_sha256(core-image-weston.root.img.zstd)";
+					filename = "core-image-weston.root.img.zst";
+					sha256 = "$swupdate_get_sha256(core-image-weston.root.img.zst)";
 					type = "raw";
 					device = "/dev/disk/by-partlabel/root-B";
 					compressed = "zstd";
