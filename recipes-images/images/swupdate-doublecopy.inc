@@ -13,7 +13,7 @@ BOOT_WIC_PLUGIN ?= "bootimg-partition"
 BOOT_WIC_PLUGIN:rpi = "filescopy"
 WICVARS += "UF_ROOT_PART_SIZE UF_BOOT_PART_SIZE UF_UPDATES_PART_SIZE UF_WKS_EXTRA_ARGS BOOT_WIC_PLUGIN"
 
-WKS_FILE = "uf-doublecopy-boot-root.wks"
+WKS_FILE ?= "uf-doublecopy-boot-root.wks"
 WKS_FILE:rpi ?= "uf-doublecopy-rpi-boot-root.wks"
 
 IMAGE_FSTYPES ?= "wic.gz wic.bmap"
