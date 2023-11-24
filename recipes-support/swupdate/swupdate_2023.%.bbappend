@@ -9,7 +9,6 @@ file://sign_pub.pem \
 	file://30-install-to \
 	file://swupdate-updates.env \
 	file://0001-Log-save_state.patch \
-	file://0003-Drop-unused-UPDATE_STATE_CHOICE_NONE.patch \
 	file://swupdate.cfg \
 "
 
