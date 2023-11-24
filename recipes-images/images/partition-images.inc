@@ -6,7 +6,7 @@ IMAGE_CMD:wic:append() {
 	UF_COMPRESSION_COMMAND="zstdmt"
 	UF_COMPRESSION_EXTENSION="zst"
 
-	if [ ${UF_COMPRESSION_FORMAT} == "zlib" ]; then
+	if [ ${UF_COMPRESSION_FORMAT} = "zlib" ]; then
 		UF_COMPRESSION_COMMAND="gzip"
 		UF_COMPRESSION_EXTENSION="gz"
 	fi
