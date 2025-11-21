@@ -1,6 +1,6 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
-SRC_URI += " \
+SRC_URI:append = " \
 	file://0001-fbmem.c-fix-formula-for-centered-logo-margins.patch \
         file://0001-cma-overlay.dts-remove-option-to-pass-overlay-paramt.patch \
 "
