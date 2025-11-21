@@ -2,8 +2,9 @@ FILESEXTRAPATHS:prepend:rpi := "${THISDIR}/files:"
 
 SRC_URI:append:rpi = " \
 	file://env.cfg \
-	file://0001-Add-double-copy-support-for-rpi.patch \
-	file://0002-Set-default-ustate-variable.patch \
+    file://0001-Revert-arm-rpi-Switch-to-a-text-environment.patch \
+    file://0002-Revert-arm-rpi-Switch-to-standard-boot.patch \
+    file://0003-Add-double-copy-support-for-rpi.patch \
 "
 
 UBOOT_ENV_SIZE:rpi ?= "16384"
