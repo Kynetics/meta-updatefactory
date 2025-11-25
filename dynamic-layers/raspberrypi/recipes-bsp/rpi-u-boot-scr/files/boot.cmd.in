@@ -8,7 +8,7 @@ else
     exit
 fi
 
-setenv overlays ${overlays} vc4-kms-v3d-pi4.dtbo 
+setenv overlays ${overlays} disable-bt.dtbo uart0.dtbo vc4-fkms-v3d-pi4.dtbo
 for dtbo in ${overlays}; do
     if load ${devtype} ${devnum}:${distro_bootpart} ${fdt_overlay_addr_r} overlays/${dtbo}; then
         echo Applying overlay ${dtbo}...
@@ -20,7 +20,7 @@ done
 
 fdt get value fdt_bootargs /chosen bootargs
 setenv rootargs root=PARTLABEL=root-${part_copy} rootfstype=ext4 rootwait
-setenv extra_args console=ttyS0,115200
+setenv extra_args console=ttyAMA0,115200
 setenv bootargs "${fdt_bootargs} ${extra_args} ${rootargs} ${bootargs}"
 
 
